@@ -1,1240 +1,781 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#2b211c">
-  <meta name="description" content="Calma Cafe digital menu">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#fdfdfd" />
+  <meta name="description" content="Calma digital menu" />
   <title>Calma Menu</title>
   <style>
     :root {
-      --bg:#f4efe8;
-      --paper:#fbf8f3;
-      --ink:#1f1a17;
-      --muted:#75685f;
-      --mocha:#6b4d3e;
-      --mocha-dark:#2b211c;
-      --line:#ded2c7;
-      --shadow:0 14px 40px rgba(43,33,28,.10);
-      --radius:24px;
+      --bg: #f9f9f9;
+      --card-bg: #ffffff;
+      --text-main: #1a1a1a;
+      --text-sub: #757575;
+      --accent: #d88941;
+      --border: #f0f0f0;
+      --shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:Arial,Tahoma,sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(107,77,62,.08), transparent 30%),
-        var(--bg);
-      color:var(--ink);
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body {
+      margin: 0;
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding-bottom: 90px;
     }
-    .hero{
-      padding:36px 18px 26px;
-      background:linear-gradient(145deg,#211915,#3d2d25 55%,#6b4d3e);
-      color:#fff;
-      border-radius:0 0 34px 34px;
-      box-shadow:var(--shadow);
+
+    .app-container {
+      max-width: 480px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      min-height: 100vh;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+      position: relative;
     }
-    .hero-inner{max-width:1050px;margin:auto}
-    .brand-row{display:flex;align-items:center;justify-content:space-between;gap:20px}
-    .brand-mark{
-      width:56px;height:56px;border:1px solid rgba(255,255,255,.35);
-      border-radius:18px;display:grid;place-items:center;font-size:26px;font-weight:800;
-      background:rgba(255,255,255,.06);backdrop-filter:blur(8px)
+
+    .header {
+      padding: 20px 16px 10px;
+      text-align: center;
+      background: var(--card-bg);
     }
-    .brand h1{margin:0;font-size:44px;letter-spacing:.5px;line-height:1}
-    .brand p{margin:8px 0 0;color:#e4d8cf;font-size:14px}
-    .hero-tag{margin-top:28px;max-width:620px;font-size:15px;color:#eadfd6;line-height:1.7}
-    .toolbar{
-      max-width:1050px;margin:-14px auto 0;padding:0 18px;position:sticky;top:0;z-index:20
+    .header h1 { margin: 0; font-size: 32px; font-weight: 800; color: #333; font-family: Georgia, serif; }
+    .header p { margin: 5px 0 0; font-size: 11px; color: var(--text-sub); letter-spacing: 2px; font-weight: bold;}
+
+    .search-container { padding: 10px 16px 16px; }
+    .search-input {
+      width: 100%;
+      padding: 14px 16px;
+      background: #f4f4f4;
+      border: 1px solid #eaeaea;
+      border-radius: 12px;
+      font-size: 15px;
+      outline: none;
+      transition: border 0.3s;
     }
-    .toolbar-card{
-      background:rgba(251,248,243,.94);backdrop-filter:blur(12px);
-      border:1px solid rgba(222,210,199,.9);border-radius:22px;
-      padding:12px;box-shadow:0 10px 30px rgba(43,33,28,.10)
+    .search-input:focus { border-color: var(--accent); }
+
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      padding: 12px 16px;
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--border);
+      scrollbar-width: none;
     }
-    .search{
-      width:100%;border:1px solid var(--line);background:white;border-radius:16px;
-      padding:13px 15px;font-size:15px;outline:none;color:var(--ink)
+    .sticky-nav::-webkit-scrollbar { display: none; }
+    .cat-pill {
+      padding: 8px 18px;
+      background: #f4f4f4;
+      color: var(--text-main);
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      text-decoration: none;
+      transition: all 0.3s;
     }
-    .search:focus{border-color:var(--mocha)}
-    .chips{
-      display:flex;gap:8px;overflow:auto;padding-top:10px;scrollbar-width:none
+    .cat-pill.active { background: var(--text-main); color: #fff; }
+
+    .section { padding: 24px 16px 0; }
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin: 0 0 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #222;
     }
-    .chips::-webkit-scrollbar{display:none}
-    .chip{
-      border:0;white-space:nowrap;border-radius:999px;padding:9px 13px;
-      background:#eee5dd;color:var(--mocha-dark);cursor:pointer;font-size:13px
+    .section-title span.ar { font-size: 18px; color: var(--text-sub); font-weight: bold; }
+    
+    .subhead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 24px 0 12px;
+      color: #444;
+      font-size: 16px;
+      font-weight: 700;
+      background-color: #f9f9f9;
+      padding: 8px 12px;
+      border-radius: 8px;
     }
-    .chip:hover{background:#dfd1c6}
-    main{max-width:1050px;margin:auto;padding:24px 18px 60px}
-    .menu-section{padding:22px 0;scroll-margin-top:118px}
-    .section-title{
-      display:flex;justify-content:space-between;align-items:end;margin-bottom:13px
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 16px;
     }
-    .eyebrow{margin:0 0 3px;color:var(--mocha);text-transform:uppercase;letter-spacing:1.6px;font-size:11px;font-weight:700}
-    .section-title h2{margin:0;font-size:26px}
-    .section-title>span{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 9px;background:var(--paper)}
-    .menu-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-    .menu-item{
-      min-height:84px;background:var(--paper);border:1px solid var(--line);border-radius:18px;
-      padding:14px 15px;display:flex;align-items:center;justify-content:space-between;gap:14px;
-      box-shadow:0 4px 14px rgba(43,33,28,.04)
+    .item:last-child { border-bottom: none; }
+    
+    .item-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
-    .menu-item h3{margin:0 0 6px;font-size:15px;line-height:1.25}
-    .menu-item p{margin:0;color:var(--muted);font-size:14px;line-height:1.35}
-    .price:not(:empty){
-      flex:0 0 auto;color:var(--mocha-dark);font-weight:800;font-size:14px;
-      background:#eee5dd;border-radius:999px;padding:7px 9px
+    .item-info h4 { margin: 0 0 6px; font-size: 15px; font-weight: 700; color: #222;}
+    .item-info p { margin: 0 0 8px; font-size: 13px; color: var(--text-sub); }
+    .item-info .price { font-size: 14px; font-weight: 700; color: var(--accent); }
+
+    .item-image {
+      width: 90px;
+      height: 90px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      background-color: #f4f4f4;
     }
-    .hidden{display:none!important}
-    .empty{
-      display:none;text-align:center;padding:50px 15px;color:var(--muted)
-    }
-    footer{text-align:center;padding:26px 18px 50px;color:var(--muted);font-size:13px}
-    footer strong{color:var(--mocha-dark)}
-    @media (max-width:700px){
-      .hero{padding-top:28px}
-      .brand h1{font-size:38px}
-      .hero-tag{font-size:14px}
-      .menu-grid{grid-template-columns:1fr}
-      .section-title h2{font-size:23px}
-      .toolbar{padding:0 12px}
-      main{padding-left:12px;padding-right:12px}
-    }
+
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-inner">
-      <div class="brand-row">
-        <div class="brand">
-          <h1>Calma</h1>
-          <p>COFFEE • FOOD • SHISHA</p>
-        </div>
-        <div class="brand-mark">C</div>
-      </div>
-      <p class="hero-tag" dir="rtl">
-        أهلا بكم في كالما. تصفح المنيو واختر من القهوة، المشروبات، الحلويات، الطعام والأرجيلة.
-      </p>
-    </div>
-  </header>
 
-  <div class="toolbar">
-    <div class="toolbar-card">
-      <input id="search" class="search" type="search" placeholder="Search / ابحث في المنيو">
-      <div class="chips">
-        <button class="chip" data-target="hot">المشروبات الساخنة</button><button class="chip" data-target="iced">المشروبات الباردة</button><button class="chip" data-target="frappe">فرابيه وميلك شيك</button><button class="chip" data-target="fresh">الموهيتو والعصائر</button><button class="chip" data-target="dessert">الحلويات والمخبوزات</button><button class="chip" data-target="food">الطعام</button><button class="chip" data-target="sides">المقبلات والسناكات</button><button class="chip" data-target="shisha">الأرجيلة</button>
-      </div>
+  <div class="app-container">
+    
+    <header class="header">
+      <h1>Calma</h1>
+      <p>COFFEE • FOOD • SHISHA</p>
+    </header>
+
+    <div class="search-container">
+      <input id="search" class="search-input" type="search" placeholder="ابحث في المنيو / Search..." />
     </div>
+
+    <nav class="sticky-nav" id="stickyNav">
+      <a href="#hot-coffee" class="cat-pill active">Hot Coffee</a>
+      <a href="#iced-coffee" class="cat-pill">Iced Coffee</a>
+      <a href="#other-drinks" class="cat-pill">Other Drinks</a>
+      <a href="#food-menu" class="cat-pill">Food</a>
+      <a href="#desserts" class="cat-pill">Desserts</a>
+      <a href="#shisha-menu" class="cat-pill">Shisha</a>
+    </nav>
+
+    <!-- Hot Coffee -->
+    <section class="section" id="hot-coffee">
+      <h2 class="section-title">Hot Coffee <span class="ar" dir="rtl">القهوة الساخنة</span></h2>
+      <div class="menu-list">
+        <div class="item" data-search="espresso double اسبريسو دبل">
+          <div class="item-info"><h4>Espresso Double</h4><p dir="rtl">اسبريسو دبل</p><div class="price">— JD</div></div>
+          <img src="Calma_Hot_Drinks_Images/01_Espresso_Double.png" alt="Espresso Double" class="item-image">
+        </div>
+        <div class="item" data-search="espresso single اسبريسو سنجل">
+          <div class="item-info"><h4>Espresso Single</h4><p dir="rtl">اسبريسو سنجل</p><div class="price">— JD</div></div>
+          <img src="Calma_Hot_Drinks_Images/02_Espresso_Single.png" alt="Espresso Single" class="item-image">
+        </div>
+        <div class="item" data-search="americano أمريكانو">
+          <div class="item-info"><h4>Americano</h4><p dir="rtl">أمريكانو</p><div class="price">— JD</div></div>
+          <img src="Calma_Hot_Drinks_Images/03_Americano.png" alt="Americano" class="item-image">
+        </div>
+        <div class="item" data-search="american filter coffee أمريكان فلتر كوفي">
+          <div class="item-info"><h4>American Filter Coffee</h4><p dir="rtl">أمريكان فلتر كوفي</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1551030173-122aabc4489c?auto=format&fit=crop&w=200&q=80" alt="Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="flat white فلات وايت">
+          <div class="item-info"><h4>Flat White</h4><p dir="rtl">فلات وايت</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=200&q=80" alt="Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="cappuccino كابتشينو">
+          <div class="item-info"><h4>Cappuccino</h4><p dir="rtl">كابتشينو</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=200&q=80" alt="Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="coffee latte كوفي لاتيه">
+          <div class="item-info"><h4>Coffee Latte</h4><p dir="rtl">كوفي لاتيه</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?auto=format&fit=crop&w=200&q=80" alt="Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="dark mocha دارك موكا">
+          <div class="item-info"><h4>Dark Mocha</h4><p dir="rtl">دارك موكا</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?auto=format&fit=crop&w=200&q=80" alt="Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="white mocha وايت موكا">
+          <div class="item-info"><h4>White Mocha</h4><p dir="rtl">وايت موكا</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?auto=format&fit=crop&w=200&q=80" alt="Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="hot caramel macchiato هوت كراميل ماكياتو">
+          <div class="item-info"><h4>Hot Caramel Macchiato</h4><p dir="rtl">هوت كراميل ماكياتو</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1485808191679-5f86510681a2?auto=format&fit=crop&w=200&q=80" alt="Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="espresso macchiato اسبريسو ماكياتو">
+          <div class="item-info"><h4>Espresso Macchiato</h4><p dir="rtl">اسبريسو ماكياتو</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1485808191679-5f86510681a2?auto=format&fit=crop&w=200&q=80" alt="Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="turkish coffee single قهوة تركي سنجل">
+          <div class="item-info"><h4>Turkish Coffee Single</h4><p dir="rtl">قهوة تركي سنجل</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=200&q=80" alt="Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="turkish coffee double قهوة تركي دبل">
+          <div class="item-info"><h4>Turkish Coffee Double</h4><p dir="rtl">قهوة تركي دبل</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=200&q=80" alt="Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="spanish latte سبانيش لاتيه">
+          <div class="item-info"><h4>Spanish Latte</h4><p dir="rtl">سبانيش لاتيه</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?auto=format&fit=crop&w=200&q=80" alt="Coffee" class="item-image">
+        </div>
+      </div>
+    </section>
+
+    <!-- Iced Coffee -->
+    <section class="section" id="iced-coffee">
+      <h2 class="section-title">Iced Coffee <span class="ar" dir="rtl">القهوة الباردة</span></h2>
+      <div class="menu-list">
+        <div class="item" data-search="iced americano آيس أمريكانو">
+          <div class="item-info"><h4>Iced Americano</h4><p dir="rtl">آيس أمريكانو</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=200&q=80" alt="Iced Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="iced latte آيس لاتيه">
+          <div class="item-info"><h4>Iced Latte</h4><p dir="rtl">آيس لاتيه</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1499961024600-ad094db305cc?auto=format&fit=crop&w=200&q=80" alt="Iced Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="iced dark mocha آيس دارك موكا">
+          <div class="item-info"><h4>Iced Dark Mocha</h4><p dir="rtl">آيس دارك موكا</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1572490122747-3968b75bb811?auto=format&fit=crop&w=200&q=80" alt="Iced Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="iced white mocha آيس وايت موكا">
+          <div class="item-info"><h4>Iced White Mocha</h4><p dir="rtl">آيس وايت موكا</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1572490122747-3968b75bb811?auto=format&fit=crop&w=200&q=80" alt="Iced Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="iced spanish latte آيس سبانيش لاتيه">
+          <div class="item-info"><h4>Iced Spanish Latte</h4><p dir="rtl">آيس سبانيش لاتيه</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1499961024600-ad094db305cc?auto=format&fit=crop&w=200&q=80" alt="Iced Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="iced caramel macchiato آيس كراميل ماكياتو">
+          <div class="item-info"><h4>Iced Caramel Macchiato</h4><p dir="rtl">آيس كراميل ماكياتو</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1517701550927-30cfcb64ac45?auto=format&fit=crop&w=200&q=80" alt="Iced Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="iced shaking آيس شيكنج">
+          <div class="item-info"><h4>Iced Shaking</h4><p dir="rtl">آيس شيكنج</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1517701550927-30cfcb64ac45?auto=format&fit=crop&w=200&q=80" alt="Iced Coffee" class="item-image">
+        </div>
+      </div>
+    </section>
+
+    <!-- Other Drinks -->
+    <section class="section" id="other-drinks">
+      <h2 class="section-title">Other Drinks <span class="ar" dir="rtl">مشروبات أخرى</span></h2>
+      
+      <div class="subhead"><span>Frappe & Milkshake</span><span dir="rtl">فرابيه وميلك شيك</span></div>
+      <div class="menu-list">
+        <div class="item" data-search="caramel frappe كراميل فرابيه">
+          <div class="item-info"><h4>Caramel Frappe</h4><p dir="rtl">كراميل فرابيه</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1572490122747-3968b75bb811?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="vanilla frappe فانيلا فرابيه">
+          <div class="item-info"><h4>Vanilla Frappe</h4><p dir="rtl">فانيلا فرابيه</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1572490122747-3968b75bb811?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="black forest frappe بلاك فوريست فرابيه">
+          <div class="item-info"><h4>Black Forest Frappe</h4><p dir="rtl">بلاك فوريست فرابيه</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1572490122747-3968b75bb811?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="oreo milkshake أوريو ميلك شيك">
+          <div class="item-info"><h4>Oreo Milkshake</h4><p dir="rtl">أوريو ميلك شيك</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="vanilla milkshake فانيلا ميلك شيك">
+          <div class="item-info"><h4>Vanilla Milkshake</h4><p dir="rtl">فانيلا ميلك شيك</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="snickers milkshake سنيكرز ميلك شيك">
+          <div class="item-info"><h4>Snickers Milkshake</h4><p dir="rtl">سنيكرز ميلك شيك</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="arabic milkshake عربية ميلك شيك">
+          <div class="item-info"><h4>Arabic Milkshake</h4><p dir="rtl">عربية ميلك شيك</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="chocolate milkshake شوكليت ميلك شيك">
+          <div class="item-info"><h4>Chocolate Milkshake</h4><p dir="rtl">شوكليت ميلك شيك</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="strawberry milkshake ستروبيري ميلك شيك">
+          <div class="item-info"><h4>Strawberry Milkshake</h4><p dir="rtl">ستروبيري ميلك شيك</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="blueberry milkshake بلوبيري ميلك شيك">
+          <div class="item-info"><h4>Blueberry Milkshake</h4><p dir="rtl">بلوبيري ميلك شيك</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+      </div>
+
+      <div class="subhead"><span>Mojito</span><span dir="rtl">موهيتو</span></div>
+      <div class="menu-list">
+        <div class="item" data-search="sunset mojito سنست موهيتو">
+          <div class="item-info"><h4>Sunset Mojito</h4><p dir="rtl">سنست موهيتو</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="blue lagoon mojito بلو لاجون موهيتو">
+          <div class="item-info"><h4>Blue Lagoon Mojito</h4><p dir="rtl">بلو لاجون موهيتو</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1560512823-829485b8bf24?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="berry breeze mojito بيري بريز موهيتو">
+          <div class="item-info"><h4>Berry Breeze Mojito</h4><p dir="rtl">بيري بريز موهيتو</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="mango tango mojito مانجو تانجو موهيتو">
+          <div class="item-info"><h4>Mango Tango Mojito</h4><p dir="rtl">مانجو تانجو موهيتو</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="pink lemonade mojito بينك ليمونيد موهيتو">
+          <div class="item-info"><h4>Pink Lemonade Mojito</h4><p dir="rtl">بينك ليمونيد موهيتو</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="piña colada mojito بينا كولادا موهيتو">
+          <div class="item-info"><h4>Piña Colada Mojito</h4><p dir="rtl">بينا كولادا موهيتو</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+      </div>
+
+      <div class="subhead"><span>Iced Tea</span><span dir="rtl">آيس تي</span></div>
+      <div class="menu-list">
+        <div class="item" data-search="luma iced tea لوما آيس تي">
+          <div class="item-info"><h4>Luma Iced Tea</h4><p dir="rtl">لوما آيس تي</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="sura iced tea سورا آيس تي">
+          <div class="item-info"><h4>Sura Iced Tea</h4><p dir="rtl">سورا آيس تي</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="vella iced tea فيلا آيس تي">
+          <div class="item-info"><h4>Vella Iced Tea</h4><p dir="rtl">فيلا آيس تي</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="alma iced tea ألما آيس تي">
+          <div class="item-info"><h4>Alma Iced Tea</h4><p dir="rtl">ألما آيس تي</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+      </div>
+
+      <div class="subhead"><span>Fresh & More</span><span dir="rtl">عصائر ومشروبات</span></div>
+      <div class="menu-list">
+        <div class="item" data-search="lemon mint ليمون ونعنع">
+          <div class="item-info"><h4>Lemon & Mint</h4><p dir="rtl">ليمون ونعنع</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="avocado with honey & nuts أفوكادو بالعسل والمكسرات">
+          <div class="item-info"><h4>Avocado with Honey & Nuts</h4><p dir="rtl">أفوكادو بالعسل والمكسرات</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="mango juice مانجو">
+          <div class="item-info"><h4>Mango Juice</h4><p dir="rtl">مانجو</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="strawberry juice فراولة">
+          <div class="item-info"><h4>Strawberry Juice</h4><p dir="rtl">فراولة</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="mango & strawberry مانجو وفراولة">
+          <div class="item-info"><h4>Mango & Strawberry</h4><p dir="rtl">مانجو وفراولة</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="orange juice برتقال">
+          <div class="item-info"><h4>Orange Juice</h4><p dir="rtl">برتقال</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="banana with milk موز وحليب">
+          <div class="item-info"><h4>Banana with Milk</h4><p dir="rtl">موز وحليب</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="kiwi & lemon كيوي وليمون">
+          <div class="item-info"><h4>Kiwi & Lemon</h4><p dir="rtl">كيوي وليمون</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+      </div>
+
+      <div class="subhead"><span>Brew</span><span dir="rtl">مقطرة</span></div>
+      <div class="menu-list">
+        <div class="item" data-search="iced v60 v60 بارد">
+          <div class="item-info"><h4>Iced V60</h4><p dir="rtl">V60 بارد</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=200&q=80" alt="Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="hot v60 v60 ساخن">
+          <div class="item-info"><h4>Hot V60</h4><p dir="rtl">V60 ساخن</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=200&q=80" alt="Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="cold brew كولد برو">
+          <div class="item-info"><h4>Cold Brew</h4><p dir="rtl">كولد برو</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1461023058943-0708e5f23a54?auto=format&fit=crop&w=200&q=80" alt="Coffee" class="item-image">
+        </div>
+        <div class="item" data-search="french press فرينش بريس">
+          <div class="item-info"><h4>French Press</h4><p dir="rtl">فرينش بريس</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?auto=format&fit=crop&w=200&q=80" alt="Coffee" class="item-image">
+        </div>
+      </div>
+
+      <div class="subhead"><span>Matcha</span><span dir="rtl">ماتشا</span></div>
+      <div class="menu-list">
+        <div class="item" data-search="matcha vanilla ماتشا فانيلا">
+          <div class="item-info"><h4>Matcha Vanilla</h4><p dir="rtl">ماتشا فانيلا</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1515823662972-da6a2e4d3002?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="matcha coconut ماتشا كوكونت">
+          <div class="item-info"><h4>Matcha Coconut</h4><p dir="rtl">ماتشا كوكونت</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1515823662972-da6a2e4d3002?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="matcha mango ماتشا مانجو">
+          <div class="item-info"><h4>Matcha Mango</h4><p dir="rtl">ماتشا مانجو</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1515823662972-da6a2e4d3002?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+      </div>
+
+      <div class="subhead"><span>Hot Drinks</span><span dir="rtl">مشروبات ساخنة</span></div>
+      <div class="menu-list">
+        <div class="item" data-search="hot chocolate هوت شوكليت">
+          <div class="item-info"><h4>Hot Chocolate</h4><p dir="rtl">هوت شوكليت</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="tea pot إبريق شاي">
+          <div class="item-info"><h4>Tea Pot</h4><p dir="rtl">إبريق شاي</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="herbal flower tea زهورات">
+          <div class="item-info"><h4>Herbal Flower Tea</h4><p dir="rtl">زهورات</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="nescafé with milk نسكافيه بالحليب">
+          <div class="item-info"><h4>Nescafé with Milk</h4><p dir="rtl">نسكافيه بالحليب</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="karak tea شاي كرك">
+          <div class="item-info"><h4>Karak Tea</h4><p dir="rtl">شاي كرك</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+      </div>
+
+      <div class="subhead"><span>Cold Drinks</span><span dir="rtl">مشروبات باردة</span></div>
+      <div class="menu-list">
+        <div class="item" data-search="matrix cola ماتريكس كولا">
+          <div class="item-info"><h4>Matrix Cola</h4><p dir="rtl">ماتريكس كولا</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1622543925917-763c34d1a86e?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="matrix zero cola ماتريكس زيرو كولا">
+          <div class="item-info"><h4>Matrix Zero Cola</h4><p dir="rtl">ماتريكس زيرو كولا</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1622543925917-763c34d1a86e?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="matrix orange ماتريكس برتقال">
+          <div class="item-info"><h4>Matrix Orange</h4><p dir="rtl">ماتريكس برتقال</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1622543925917-763c34d1a86e?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="matrix up ماتريكس أب">
+          <div class="item-info"><h4>Matrix Up</h4><p dir="rtl">ماتريكس أب</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1622543925917-763c34d1a86e?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="matrix zero up ماتريكس زيرو أب">
+          <div class="item-info"><h4>Matrix Zero Up</h4><p dir="rtl">ماتريكس زيرو أب</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1622543925917-763c34d1a86e?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+        <div class="item" data-search="hibiscus كركديه">
+          <div class="item-info"><h4>Hibiscus</h4><p dir="rtl">كركديه</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=200&q=80" alt="Drink" class="item-image">
+        </div>
+      </div>
+
+      <div class="subhead"><span>Water & Energy</span><span dir="rtl">مياه وطاقة</span></div>
+      <div class="menu-list">
+        <div class="item" data-search="mineral water مياه معدنية">
+          <div class="item-info"><h4>Mineral water</h4><p dir="rtl">مياه معدنية</p><div class="price">0.9 JD</div></div>
+          <img src="https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=200&q=80" alt="Water" class="item-image">
+        </div>
+        <div class="item" data-search="perrier بيرييه">
+          <div class="item-info"><h4>Perrier</h4><p dir="rtl">مياه غازية بيرييه</p><div class="price">1.95 JD</div></div>
+          <img src="https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=200&q=80" alt="Water" class="item-image">
+        </div>
+        <div class="item" data-search="redbull ريدبول">
+          <div class="item-info"><h4>Redbull</h4><p dir="rtl">مشروب طاقة ريدبول</p><div class="price">2.95 JD</div></div>
+          <img src="https://images.unsplash.com/photo-1622543925917-763c34d1a86e?auto=format&fit=crop&w=200&q=80" alt="Energy Drink" class="item-image">
+        </div>
+      </div>
+    </section>
+
+    <!-- Food -->
+    <section class="section" id="food-menu">
+      <h2 class="section-title">Food <span class="ar" dir="rtl">الطعام</span></h2>
+      
+      <div class="subhead"><span>Flats</span><span dir="rtl">فلات</span></div>
+      <div class="menu-list">
+        <div class="item" data-search="classic flat كلاسيك فلات">
+          <div class="item-info"><h4>Classic Flat</h4><p dir="rtl">كلاسيك فلات</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="truffle flat ترافل فلات">
+          <div class="item-info"><h4>Truffle Flat</h4><p dir="rtl">ترافل فلات</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="cheese flat تشيز فلات">
+          <div class="item-info"><h4>Cheese Flat</h4><p dir="rtl">تشيز فلات</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+      </div>
+
+      <div class="subhead"><span>Burgers</span><span dir="rtl">البرغر</span></div>
+      <div class="menu-list">
+        <div class="item" data-search="classic burger كلاسيك برغر">
+          <div class="item-info"><h4>Classic Burger</h4><p dir="rtl">كلاسيك برغر</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="truffle burger ترافل برغر">
+          <div class="item-info"><h4>Truffle Burger</h4><p dir="rtl">ترافل برغر</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="cheese burger تشيز برغر">
+          <div class="item-info"><h4>Cheese Burger</h4><p dir="rtl">تشيز برغر</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="stuffed burger برغر محشي">
+          <div class="item-info"><h4>Stuffed Burger</h4><p dir="rtl">برغر محشي</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1594212699903-eca8547c47fe?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+      </div>
+
+      <div class="subhead"><span>Chicken</span><span dir="rtl">الدجاج</span></div>
+      <div class="menu-list">
+        <div class="item" data-search="crispy chicken كرسبي تشيكن">
+          <div class="item-info"><h4>Crispy Chicken</h4><p dir="rtl">كرسبي تشيكن</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="chicken toast تشيكن توست">
+          <div class="item-info"><h4>Chicken Toast</h4><p dir="rtl">تشيكن توست</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="spicy chicken سبايسي تشيكن">
+          <div class="item-info"><h4>Spicy Chicken</h4><p dir="rtl">سبايسي تشيكن</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+      </div>
+
+      <div class="subhead"><span>Wraps</span><span dir="rtl">راب</span></div>
+      <div class="menu-list">
+        <div class="item" data-search="beef wrap بيف راب">
+          <div class="item-info"><h4>Beef Wrap</h4><p dir="rtl">بيف راب</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="chicken wrap تشيكن راب">
+          <div class="item-info"><h4>Chicken Wrap</h4><p dir="rtl">تشيكن راب</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+      </div>
+
+      <div class="subhead"><span>Boxes</span><span dir="rtl">بوكسات</span></div>
+      <div class="menu-list">
+        <div class="item" data-search="hot chicken box هوت تشيكن بوكس">
+          <div class="item-info"><h4>Hot Chicken Box</h4><p dir="rtl">هوت تشيكن بوكس</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="spicy chicken box سبايسي تشيكن بوكس">
+          <div class="item-info"><h4>Spicy Chicken Box</h4><p dir="rtl">سبايسي تشيكن بوكس</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="classic chicken box كلاسيك تشيكن بوكس">
+          <div class="item-info"><h4>Classic Chicken Box</h4><p dir="rtl">كلاسيك تشيكن بوكس</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+      </div>
+
+      <div class="subhead"><span>Sides & Salads</span><span dir="rtl">مقبلات وسلطات</span></div>
+      <div class="menu-list">
+        <div class="item" data-search="chicken tenders تشيكن تندرز">
+          <div class="item-info"><h4>Chicken Tenders</h4><p dir="rtl">تشيكن تندرز</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="chicken rice bowl تشيكن رايس بول">
+          <div class="item-info"><h4>Chicken Rice Bowl</h4><p dir="rtl">تشيكن رايس بول</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="crispy chicken salad كرسبي تشيكن سالاد">
+          <div class="item-info"><h4>Crispy Chicken Salad</h4><p dir="rtl">كرسبي تشيكن سالاد</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="caesar salad سيزر سالاد">
+          <div class="item-info"><h4>Caesar Salad</h4><p dir="rtl">سيزر سالاد</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="chicken nuggets تشيكن ناجتس">
+          <div class="item-info"><h4>Chicken Nuggets</h4><p dir="rtl">تشيكن ناجتس</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="jalapeño bites هالبينو بايتس">
+          <div class="item-info"><h4>Jalapeño Bites</h4><p dir="rtl">هالبينو بايتس</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="french fries بطاطا مقلية">
+          <div class="item-info"><h4>French Fries</h4><p dir="rtl">بطاطا مقلية</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="potato wedges بطاطا ويجز">
+          <div class="item-info"><h4>Potato Wedges</h4><p dir="rtl">بطاطا ويجز</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+        <div class="item" data-search="curly fries بطاطا كيرلي">
+          <div class="item-info"><h4>Curly Fries</h4><p dir="rtl">بطاطا كيرلي</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=200&q=80" alt="Food" class="item-image">
+        </div>
+      </div>
+    </section>
+
+    <!-- Desserts -->
+    <section class="section" id="desserts">
+      <h2 class="section-title">Desserts <span class="ar" dir="rtl">الحلويات</span></h2>
+      <div class="menu-list">
+        <div class="item" data-search="san sebastián سان سباستيان">
+          <div class="item-info"><h4>San Sebastián</h4><p dir="rtl">سان سباستيان</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?auto=format&fit=crop&w=200&q=80" alt="Dessert" class="item-image">
+        </div>
+        <div class="item" data-search="red velvet ريد فيلفت">
+          <div class="item-info"><h4>Red Velvet</h4><p dir="rtl">ريد فيلفت</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1616541823729-00fe0aacd32c?auto=format&fit=crop&w=200&q=80" alt="Dessert" class="item-image">
+        </div>
+        <div class="item" data-search="german cake جيرمن">
+          <div class="item-info"><h4>German Cake</h4><p dir="rtl">جيرمن</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?auto=format&fit=crop&w=200&q=80" alt="Dessert" class="item-image">
+        </div>
+        <div class="item" data-search="blueberry cheesecake تشيز كيك بلوبيري">
+          <div class="item-info"><h4>Blueberry Cheesecake</h4><p dir="rtl">تشيز كيك بلوبيري</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=200&q=80" alt="Dessert" class="item-image">
+        </div>
+        <div class="item" data-search="brownies in a clay pot فخارة براونيز">
+          <div class="item-info"><h4>Brownies in a Clay Pot</h4><p dir="rtl">فخارة براونيز</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=200&q=80" alt="Dessert" class="item-image">
+        </div>
+        <div class="item" data-search="strawberry cheesecake تشيز كيك فراولة">
+          <div class="item-info"><h4>Strawberry Cheesecake</h4><p dir="rtl">تشيز كيك فراولة</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=200&q=80" alt="Dessert" class="item-image">
+        </div>
+        <div class="item" data-search="tiramisu تيراميسو">
+          <div class="item-info"><h4>Tiramisu</h4><p dir="rtl">تيراميسو</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?auto=format&fit=crop&w=200&q=80" alt="Dessert" class="item-image">
+        </div>
+      </div>
+      
+      <div class="subhead"><span>Bakery</span><span dir="rtl">مخبوزات</span></div>
+      <div class="menu-list">
+        <div class="item" data-search="plain croissant كرواسون سادة">
+          <div class="item-info"><h4>Plain Croissant</h4><p dir="rtl">كرواسون سادة</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=200&q=80" alt="Bakery" class="item-image">
+        </div>
+        <div class="item" data-search="cheese croissant كرواسون جبنة">
+          <div class="item-info"><h4>Cheese Croissant</h4><p dir="rtl">كرواسون جبنة</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=200&q=80" alt="Bakery" class="item-image">
+        </div>
+        <div class="item" data-search="chocolate croissant كرواسون شوكولاتة">
+          <div class="item-info"><h4>Chocolate Croissant</h4><p dir="rtl">كرواسون شوكولاتة</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=200&q=80" alt="Bakery" class="item-image">
+        </div>
+        <div class="item" data-search="plain cookies كوكيز سادة">
+          <div class="item-info"><h4>Plain Cookies</h4><p dir="rtl">كوكيز سادة</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=200&q=80" alt="Bakery" class="item-image">
+        </div>
+        <div class="item" data-search="chocolate cookies كوكيز شوكولاتة">
+          <div class="item-info"><h4>Chocolate Cookies</h4><p dir="rtl">كوكيز شوكولاتة</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=200&q=80" alt="Bakery" class="item-image">
+        </div>
+        <div class="item" data-search="blueberry danish دانش بلوبيري">
+          <div class="item-info"><h4>Blueberry Danish</h4><p dir="rtl">دانش بلوبيري</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=200&q=80" alt="Bakery" class="item-image">
+        </div>
+        <div class="item" data-search="fruit danish دانش فواكه">
+          <div class="item-info"><h4>Fruit Danish</h4><p dir="rtl">دانش فواكه</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=200&q=80" alt="Bakery" class="item-image">
+        </div>
+      </div>
+    </section>
+
+    <!-- Shisha -->
+    <section class="section" id="shisha-menu">
+      <h2 class="section-title">Shisha <span class="ar" dir="rtl">الأرجيلة</span></h2>
+      <div class="menu-list">
+        <div class="item" data-search="double apple shisha أرجيلة تفاحتين">
+          <div class="item-info"><h4>Double Apple Shisha</h4><p dir="rtl">أرجيلة تفاحتين</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1516880711640-ef7daf816e87?auto=format&fit=crop&w=200&q=80" alt="Shisha" class="item-image">
+        </div>
+        <div class="item" data-search="lemon mint shisha أرجيلة ليمون ونعنع">
+          <div class="item-info"><h4>Lemon Mint Shisha</h4><p dir="rtl">أرجيلة ليمون ونعنع</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1516880711640-ef7daf816e87?auto=format&fit=crop&w=200&q=80" alt="Shisha" class="item-image">
+        </div>
+        <div class="item" data-search="grape mint shisha أرجيلة عنب ونعنع">
+          <div class="item-info"><h4>Grape Mint Shisha</h4><p dir="rtl">أرجيلة عنب ونعنع</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1516880711640-ef7daf816e87?auto=format&fit=crop&w=200&q=80" alt="Shisha" class="item-image">
+        </div>
+        <div class="item" data-search="love 66 shisha أرجيلة لوف 66">
+          <div class="item-info"><h4>Love 66 Shisha</h4><p dir="rtl">أرجيلة لوف 66</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1516880711640-ef7daf816e87?auto=format&fit=crop&w=200&q=80" alt="Shisha" class="item-image">
+        </div>
+        <div class="item" data-search="lady killer shisha أرجيلة ليدي كيلر">
+          <div class="item-info"><h4>Lady Killer Shisha</h4><p dir="rtl">أرجيلة ليدي كيلر</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1516880711640-ef7daf816e87?auto=format&fit=crop&w=200&q=80" alt="Shisha" class="item-image">
+        </div>
+        <div class="item" data-search="calma shisha أرجيلة كالما">
+          <div class="item-info"><h4>Calma Shisha</h4><p dir="rtl">أرجيلة كالما</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1516880711640-ef7daf816e87?auto=format&fit=crop&w=200&q=80" alt="Shisha" class="item-image">
+        </div>
+      </div>
+
+      <div class="subhead"><span>Snacks</span><span dir="rtl">تسالي</span></div>
+      <div class="menu-list">
+        <div class="item" data-search="popcorn بوشار">
+          <div class="item-info"><h4>Popcorn</h4><p dir="rtl">بوشار</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=200&q=80" alt="Snacks" class="item-image">
+        </div>
+        <div class="item" data-search="mixed nuts مكسرات">
+          <div class="item-info"><h4>Mixed Nuts</h4><p dir="rtl">مكسرات</p><div class="price">— JD</div></div>
+          <img src="https://images.unsplash.com/photo-1536591375315-bb86b3dc7816?auto=format&fit=crop&w=200&q=80" alt="Snacks" class="item-image">
+        </div>
+      </div>
+    </section>
+
   </div>
 
-  <main id="menu">
-    
-    <section class="menu-section" id="hot">
-      <div class="section-title">
-        <div>
-          <p class="eyebrow">Hot Drinks</p>
-          <h2 dir="rtl">المشروبات الساخنة</h2>
-        </div>
-        <span>24</span>
-      </div>
-      <div class="menu-grid">
-        
-        <article class="menu-item" data-search="espresso double اسبريسو دبل">
-          <div class="item-copy">
-            <h3>Espresso Double</h3>
-            <p dir="rtl">اسبريسو دبل</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="espresso single اسبريسو سنجل">
-          <div class="item-copy">
-            <h3>Espresso Single</h3>
-            <p dir="rtl">اسبريسو سنجل</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="americano أمريكانو">
-          <div class="item-copy">
-            <h3>Americano</h3>
-            <p dir="rtl">أمريكانو</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="american filter coffee قهوة أمريكية فلتر">
-          <div class="item-copy">
-            <h3>American Filter Coffee</h3>
-            <p dir="rtl">قهوة أمريكية فلتر</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="flat white فلات وايت">
-          <div class="item-copy">
-            <h3>Flat White</h3>
-            <p dir="rtl">فلات وايت</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="cappuccino كابتشينو">
-          <div class="item-copy">
-            <h3>Cappuccino</h3>
-            <p dir="rtl">كابتشينو</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="coffee latte كوفي لاتيه">
-          <div class="item-copy">
-            <h3>Coffee Latte</h3>
-            <p dir="rtl">كوفي لاتيه</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="dark mocha دارك موكا">
-          <div class="item-copy">
-            <h3>Dark Mocha</h3>
-            <p dir="rtl">دارك موكا</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="white mocha وايت موكا">
-          <div class="item-copy">
-            <h3>White Mocha</h3>
-            <p dir="rtl">وايت موكا</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="caramel macchiato كراميل ماكياتو">
-          <div class="item-copy">
-            <h3>Caramel Macchiato</h3>
-            <p dir="rtl">كراميل ماكياتو</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="espresso macchiato اسبريسو ماكياتو">
-          <div class="item-copy">
-            <h3>Espresso Macchiato</h3>
-            <p dir="rtl">اسبريسو ماكياتو</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="calma coffee قهوة كالما">
-          <div class="item-copy">
-            <h3>Calma Coffee</h3>
-            <p dir="rtl">قهوة كالما</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="turkish coffee single قهوة تركية سنجل">
-          <div class="item-copy">
-            <h3>Turkish Coffee Single</h3>
-            <p dir="rtl">قهوة تركية سنجل</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="turkish coffee double قهوة تركية دبل">
-          <div class="item-copy">
-            <h3>Turkish Coffee Double</h3>
-            <p dir="rtl">قهوة تركية دبل</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="spanish latte سبانيش لاتيه">
-          <div class="item-copy">
-            <h3>Spanish Latte</h3>
-            <p dir="rtl">سبانيش لاتيه</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="v60 V60">
-          <div class="item-copy">
-            <h3>V60</h3>
-            <p dir="rtl">V60</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="french press فرينش بريس">
-          <div class="item-copy">
-            <h3>French Press</h3>
-            <p dir="rtl">فرينش بريس</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="hot chocolate هوت شوكليت">
-          <div class="item-copy">
-            <h3>Hot Chocolate</h3>
-            <p dir="rtl">هوت شوكليت</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="calma hot chocolate هوت شوكليت كالما">
-          <div class="item-copy">
-            <h3>Calma Hot Chocolate</h3>
-            <p dir="rtl">هوت شوكليت كالما</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="tea pot إبريق شاي">
-          <div class="item-copy">
-            <h3>Tea Pot</h3>
-            <p dir="rtl">إبريق شاي</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="herbal flower tea زهورات">
-          <div class="item-copy">
-            <h3>Herbal Flower Tea</h3>
-            <p dir="rtl">زهورات</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="nescafé with milk نسكافيه بالحليب">
-          <div class="item-copy">
-            <h3>Nescafé with Milk</h3>
-            <p dir="rtl">نسكافيه بالحليب</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="karak tea شاي كرك">
-          <div class="item-copy">
-            <h3>Karak Tea</h3>
-            <p dir="rtl">شاي كرك</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="hibiscus كركديه">
-          <div class="item-copy">
-            <h3>Hibiscus</h3>
-            <p dir="rtl">كركديه</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-      </div>
-    </section>
-    
-    <section class="menu-section" id="iced">
-      <div class="section-title">
-        <div>
-          <p class="eyebrow">Iced Drinks</p>
-          <h2 dir="rtl">المشروبات الباردة</h2>
-        </div>
-        <span>16</span>
-      </div>
-      <div class="menu-grid">
-        
-        <article class="menu-item" data-search="iced americano آيس أمريكانو">
-          <div class="item-copy">
-            <h3>Iced Americano</h3>
-            <p dir="rtl">آيس أمريكانو</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="iced latte آيس لاتيه">
-          <div class="item-copy">
-            <h3>Iced Latte</h3>
-            <p dir="rtl">آيس لاتيه</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="iced dark mocha آيس دارك موكا">
-          <div class="item-copy">
-            <h3>Iced Dark Mocha</h3>
-            <p dir="rtl">آيس دارك موكا</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="iced white mocha آيس وايت موكا">
-          <div class="item-copy">
-            <h3>Iced White Mocha</h3>
-            <p dir="rtl">آيس وايت موكا</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="iced spanish latte آيس سبانيش لاتيه">
-          <div class="item-copy">
-            <h3>Iced Spanish Latte</h3>
-            <p dir="rtl">آيس سبانيش لاتيه</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="iced caramel macchiato آيس كراميل ماكياتو">
-          <div class="item-copy">
-            <h3>Iced Caramel Macchiato</h3>
-            <p dir="rtl">آيس كراميل ماكياتو</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="calma iced coffee قهوة كالما الباردة">
-          <div class="item-copy">
-            <h3>Calma Iced Coffee</h3>
-            <p dir="rtl">قهوة كالما الباردة</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="iced v60 V60 بارد">
-          <div class="item-copy">
-            <h3>Iced V60</h3>
-            <p dir="rtl">V60 بارد</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="cold brew كولد برو">
-          <div class="item-copy">
-            <h3>Cold Brew</h3>
-            <p dir="rtl">كولد برو</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="iced shaking آيس شيكنج">
-          <div class="item-copy">
-            <h3>Iced Shaking</h3>
-            <p dir="rtl">آيس شيكنج</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="iced tea آيس تي">
-          <div class="item-copy">
-            <h3>Iced Tea</h3>
-            <p dir="rtl">آيس تي</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="matcha vanilla ماتشا فانيلا">
-          <div class="item-copy">
-            <h3>Matcha Vanilla</h3>
-            <p dir="rtl">ماتشا فانيلا</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="matcha coconut ماتشا جوز الهند">
-          <div class="item-copy">
-            <h3>Matcha Coconut</h3>
-            <p dir="rtl">ماتشا جوز الهند</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="matcha mango ماتشا مانجو">
-          <div class="item-copy">
-            <h3>Matcha Mango</h3>
-            <p dir="rtl">ماتشا مانجو</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="energy drink مشروب طاقة">
-          <div class="item-copy">
-            <h3>Energy Drink</h3>
-            <p dir="rtl">مشروب طاقة</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="barbican باربيكان">
-          <div class="item-copy">
-            <h3>Barbican</h3>
-            <p dir="rtl">باربيكان</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-      </div>
-    </section>
-    
-    <section class="menu-section" id="frappe">
-      <div class="section-title">
-        <div>
-          <p class="eyebrow">Frappe &amp; Milkshake</p>
-          <h2 dir="rtl">فرابيه وميلك شيك</h2>
-        </div>
-        <span>12</span>
-      </div>
-      <div class="menu-grid">
-        
-        <article class="menu-item" data-search="calma frappe فرابيه كالما">
-          <div class="item-copy">
-            <h3>Calma Frappe</h3>
-            <p dir="rtl">فرابيه كالما</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="caramel frappe فرابيه كراميل">
-          <div class="item-copy">
-            <h3>Caramel Frappe</h3>
-            <p dir="rtl">فرابيه كراميل</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="vanilla frappe فرابيه فانيلا">
-          <div class="item-copy">
-            <h3>Vanilla Frappe</h3>
-            <p dir="rtl">فرابيه فانيلا</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="black forest frappe فرابيه بلاك فوريست">
-          <div class="item-copy">
-            <h3>Black Forest Frappe</h3>
-            <p dir="rtl">فرابيه بلاك فوريست</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="oreo milkshake ميلك شيك أوريو">
-          <div class="item-copy">
-            <h3>Oreo Milkshake</h3>
-            <p dir="rtl">ميلك شيك أوريو</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="calma milkshake ميلك شيك كالما">
-          <div class="item-copy">
-            <h3>Calma Milkshake</h3>
-            <p dir="rtl">ميلك شيك كالما</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="vanilla milkshake ميلك شيك فانيلا">
-          <div class="item-copy">
-            <h3>Vanilla Milkshake</h3>
-            <p dir="rtl">ميلك شيك فانيلا</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="snickers milkshake ميلك شيك سنيكرز">
-          <div class="item-copy">
-            <h3>Snickers Milkshake</h3>
-            <p dir="rtl">ميلك شيك سنيكرز</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="arabic milkshake ميلك شيك عربي">
-          <div class="item-copy">
-            <h3>Arabic Milkshake</h3>
-            <p dir="rtl">ميلك شيك عربي</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="chocolate milkshake ميلك شيك شوكولاتة">
-          <div class="item-copy">
-            <h3>Chocolate Milkshake</h3>
-            <p dir="rtl">ميلك شيك شوكولاتة</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="strawberry milkshake ميلك شيك فراولة">
-          <div class="item-copy">
-            <h3>Strawberry Milkshake</h3>
-            <p dir="rtl">ميلك شيك فراولة</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="blueberry milkshake ميلك شيك بلوبيري">
-          <div class="item-copy">
-            <h3>Blueberry Milkshake</h3>
-            <p dir="rtl">ميلك شيك بلوبيري</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-      </div>
-    </section>
-    
-    <section class="menu-section" id="fresh">
-      <div class="section-title">
-        <div>
-          <p class="eyebrow">Mojito &amp; Fresh Juices</p>
-          <h2 dir="rtl">الموهيتو والعصائر</h2>
-        </div>
-        <span>15</span>
-      </div>
-      <div class="menu-grid">
-        
-        <article class="menu-item" data-search="calma mojito موهيتو كالما">
-          <div class="item-copy">
-            <h3>Calma Mojito</h3>
-            <p dir="rtl">موهيتو كالما</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="sunset mojito موهيتو سنست">
-          <div class="item-copy">
-            <h3>Sunset Mojito</h3>
-            <p dir="rtl">موهيتو سنست</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="blue lagoon mojito موهيتو بلو لاجون">
-          <div class="item-copy">
-            <h3>Blue Lagoon Mojito</h3>
-            <p dir="rtl">موهيتو بلو لاجون</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="berry breeze mojito موهيتو بيري بريز">
-          <div class="item-copy">
-            <h3>Berry Breeze Mojito</h3>
-            <p dir="rtl">موهيتو بيري بريز</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="mango tango mojito موهيتو مانجو تانجو">
-          <div class="item-copy">
-            <h3>Mango Tango Mojito</h3>
-            <p dir="rtl">موهيتو مانجو تانجو</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="pink lemonade mojito موهيتو بينك ليمونيد">
-          <div class="item-copy">
-            <h3>Pink Lemonade Mojito</h3>
-            <p dir="rtl">موهيتو بينك ليمونيد</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="piña colada mojito موهيتو بينا كولادا">
-          <div class="item-copy">
-            <h3>Piña Colada Mojito</h3>
-            <p dir="rtl">موهيتو بينا كولادا</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="lemon &amp; mint ليمون ونعنع">
-          <div class="item-copy">
-            <h3>Lemon &amp; Mint</h3>
-            <p dir="rtl">ليمون ونعنع</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="avocado with honey &amp; nuts أفوكادو بالعسل والمكسرات">
-          <div class="item-copy">
-            <h3>Avocado with Honey &amp; Nuts</h3>
-            <p dir="rtl">أفوكادو بالعسل والمكسرات</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="mango juice عصير مانجو">
-          <div class="item-copy">
-            <h3>Mango Juice</h3>
-            <p dir="rtl">عصير مانجو</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="strawberry juice عصير فراولة">
-          <div class="item-copy">
-            <h3>Strawberry Juice</h3>
-            <p dir="rtl">عصير فراولة</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="mango &amp; strawberry مانجو وفراولة">
-          <div class="item-copy">
-            <h3>Mango &amp; Strawberry</h3>
-            <p dir="rtl">مانجو وفراولة</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="orange juice عصير برتقال">
-          <div class="item-copy">
-            <h3>Orange Juice</h3>
-            <p dir="rtl">عصير برتقال</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="banana with milk موز بالحليب">
-          <div class="item-copy">
-            <h3>Banana with Milk</h3>
-            <p dir="rtl">موز بالحليب</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="kiwi &amp; lemon كيوي وليمون">
-          <div class="item-copy">
-            <h3>Kiwi &amp; Lemon</h3>
-            <p dir="rtl">كيوي وليمون</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-      </div>
-    </section>
-    
-    <section class="menu-section" id="dessert">
-      <div class="section-title">
-        <div>
-          <p class="eyebrow">Desserts &amp; Bakery</p>
-          <h2 dir="rtl">الحلويات والمخبوزات</h2>
-        </div>
-        <span>14</span>
-      </div>
-      <div class="menu-grid">
-        
-        <article class="menu-item" data-search="san sebastián سان سباستيان">
-          <div class="item-copy">
-            <h3>San Sebastián</h3>
-            <p dir="rtl">سان سباستيان</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="red velvet ريد فيلفت">
-          <div class="item-copy">
-            <h3>Red Velvet</h3>
-            <p dir="rtl">ريد فيلفت</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="german cake كيك ألماني">
-          <div class="item-copy">
-            <h3>German Cake</h3>
-            <p dir="rtl">كيك ألماني</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="blueberry cheesecake تشيز كيك بلوبيري">
-          <div class="item-copy">
-            <h3>Blueberry Cheesecake</h3>
-            <p dir="rtl">تشيز كيك بلوبيري</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="strawberry cheesecake تشيز كيك فراولة">
-          <div class="item-copy">
-            <h3>Strawberry Cheesecake</h3>
-            <p dir="rtl">تشيز كيك فراولة</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="brownies in a clay pot فخارة براونيز">
-          <div class="item-copy">
-            <h3>Brownies in a Clay Pot</h3>
-            <p dir="rtl">فخارة براونيز</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="tiramisu تيراميسو">
-          <div class="item-copy">
-            <h3>Tiramisu</h3>
-            <p dir="rtl">تيراميسو</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="plain croissant كرواسون سادة">
-          <div class="item-copy">
-            <h3>Plain Croissant</h3>
-            <p dir="rtl">كرواسون سادة</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="cheese croissant كرواسون جبنة">
-          <div class="item-copy">
-            <h3>Cheese Croissant</h3>
-            <p dir="rtl">كرواسون جبنة</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="chocolate croissant كرواسون شوكولاتة">
-          <div class="item-copy">
-            <h3>Chocolate Croissant</h3>
-            <p dir="rtl">كرواسون شوكولاتة</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="plain cookies كوكيز سادة">
-          <div class="item-copy">
-            <h3>Plain Cookies</h3>
-            <p dir="rtl">كوكيز سادة</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="chocolate cookies كوكيز شوكولاتة">
-          <div class="item-copy">
-            <h3>Chocolate Cookies</h3>
-            <p dir="rtl">كوكيز شوكولاتة</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="blueberry danish دانش بلوبيري">
-          <div class="item-copy">
-            <h3>Blueberry Danish</h3>
-            <p dir="rtl">دانش بلوبيري</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="fruit danish دانش فواكه">
-          <div class="item-copy">
-            <h3>Fruit Danish</h3>
-            <p dir="rtl">دانش فواكه</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-      </div>
-    </section>
-    
-    <section class="menu-section" id="food">
-      <div class="section-title">
-        <div>
-          <p class="eyebrow">Food</p>
-          <h2 dir="rtl">الطعام</h2>
-        </div>
-        <span>18</span>
-      </div>
-      <div class="menu-grid">
-        
-        <article class="menu-item" data-search="classic flat كلاسيك فلات">
-          <div class="item-copy">
-            <h3>Classic Flat</h3>
-            <p dir="rtl">كلاسيك فلات</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="truffle flat ترافل فلات">
-          <div class="item-copy">
-            <h3>Truffle Flat</h3>
-            <p dir="rtl">ترافل فلات</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="cheese flat تشيز فلات">
-          <div class="item-copy">
-            <h3>Cheese Flat</h3>
-            <p dir="rtl">تشيز فلات</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="classic burger كلاسيك برغر">
-          <div class="item-copy">
-            <h3>Classic Burger</h3>
-            <p dir="rtl">كلاسيك برغر</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="truffle burger ترافل برغر">
-          <div class="item-copy">
-            <h3>Truffle Burger</h3>
-            <p dir="rtl">ترافل برغر</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="cheese burger تشيز برغر">
-          <div class="item-copy">
-            <h3>Cheese Burger</h3>
-            <p dir="rtl">تشيز برغر</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="stuffed burger برغر محشي">
-          <div class="item-copy">
-            <h3>Stuffed Burger</h3>
-            <p dir="rtl">برغر محشي</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="crispy chicken دجاج كرسبي">
-          <div class="item-copy">
-            <h3>Crispy Chicken</h3>
-            <p dir="rtl">دجاج كرسبي</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="chicken toast توست دجاج">
-          <div class="item-copy">
-            <h3>Chicken Toast</h3>
-            <p dir="rtl">توست دجاج</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="spicy chicken دجاج سبايسي">
-          <div class="item-copy">
-            <h3>Spicy Chicken</h3>
-            <p dir="rtl">دجاج سبايسي</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="beef wrap راب لحم">
-          <div class="item-copy">
-            <h3>Beef Wrap</h3>
-            <p dir="rtl">راب لحم</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="chicken wrap راب دجاج">
-          <div class="item-copy">
-            <h3>Chicken Wrap</h3>
-            <p dir="rtl">راب دجاج</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="hot chicken box بوكس دجاج حار">
-          <div class="item-copy">
-            <h3>Hot Chicken Box</h3>
-            <p dir="rtl">بوكس دجاج حار</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="spicy chicken box بوكس دجاج سبايسي">
-          <div class="item-copy">
-            <h3>Spicy Chicken Box</h3>
-            <p dir="rtl">بوكس دجاج سبايسي</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="classic chicken box بوكس دجاج كلاسيك">
-          <div class="item-copy">
-            <h3>Classic Chicken Box</h3>
-            <p dir="rtl">بوكس دجاج كلاسيك</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="chicken rice bowl بول أرز بالدجاج">
-          <div class="item-copy">
-            <h3>Chicken Rice Bowl</h3>
-            <p dir="rtl">بول أرز بالدجاج</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="crispy chicken salad سلطة دجاج كرسبي">
-          <div class="item-copy">
-            <h3>Crispy Chicken Salad</h3>
-            <p dir="rtl">سلطة دجاج كرسبي</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="caesar salad سلطة سيزر">
-          <div class="item-copy">
-            <h3>Caesar Salad</h3>
-            <p dir="rtl">سلطة سيزر</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-      </div>
-    </section>
-    
-    <section class="menu-section" id="sides">
-      <div class="section-title">
-        <div>
-          <p class="eyebrow">Sides &amp; Snacks</p>
-          <h2 dir="rtl">المقبلات والسناكات</h2>
-        </div>
-        <span>08</span>
-      </div>
-      <div class="menu-grid">
-        
-        <article class="menu-item" data-search="chicken tenders تندرز دجاج">
-          <div class="item-copy">
-            <h3>Chicken Tenders</h3>
-            <p dir="rtl">تندرز دجاج</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="chicken nuggets ناجتس دجاج">
-          <div class="item-copy">
-            <h3>Chicken Nuggets</h3>
-            <p dir="rtl">ناجتس دجاج</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="jalapeño bites لقيمات هالبينو">
-          <div class="item-copy">
-            <h3>Jalapeño Bites</h3>
-            <p dir="rtl">لقيمات هالبينو</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="french fries بطاطا مقلية">
-          <div class="item-copy">
-            <h3>French Fries</h3>
-            <p dir="rtl">بطاطا مقلية</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="potato wedges بطاطا ويجز">
-          <div class="item-copy">
-            <h3>Potato Wedges</h3>
-            <p dir="rtl">بطاطا ويجز</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="curly fries بطاطا كيرلي">
-          <div class="item-copy">
-            <h3>Curly Fries</h3>
-            <p dir="rtl">بطاطا كيرلي</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="popcorn بوشار">
-          <div class="item-copy">
-            <h3>Popcorn</h3>
-            <p dir="rtl">بوشار</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="mixed nuts مكسرات مشكلة">
-          <div class="item-copy">
-            <h3>Mixed Nuts</h3>
-            <p dir="rtl">مكسرات مشكلة</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-      </div>
-    </section>
-    
-    <section class="menu-section" id="shisha">
-      <div class="section-title">
-        <div>
-          <p class="eyebrow">Shisha</p>
-          <h2 dir="rtl">الأرجيلة</h2>
-        </div>
-        <span>14</span>
-      </div>
-      <div class="menu-grid">
-        
-        <article class="menu-item" data-search="double apple تفاحتين">
-          <div class="item-copy">
-            <h3>Double Apple</h3>
-            <p dir="rtl">تفاحتين</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="lemon &amp; mint ليمون ونعنع">
-          <div class="item-copy">
-            <h3>Lemon &amp; Mint</h3>
-            <p dir="rtl">ليمون ونعنع</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="grape &amp; mint عنب ونعنع">
-          <div class="item-copy">
-            <h3>Grape &amp; Mint</h3>
-            <p dir="rtl">عنب ونعنع</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="grape عنب">
-          <div class="item-copy">
-            <h3>Grape</h3>
-            <p dir="rtl">عنب</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="mint نعنع">
-          <div class="item-copy">
-            <h3>Mint</h3>
-            <p dir="rtl">نعنع</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="gum &amp; mint علكة ونعنع">
-          <div class="item-copy">
-            <h3>Gum &amp; Mint</h3>
-            <p dir="rtl">علكة ونعنع</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="blueberry بلوبيري">
-          <div class="item-copy">
-            <h3>Blueberry</h3>
-            <p dir="rtl">بلوبيري</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="blueberry &amp; mint بلوبيري ونعنع">
-          <div class="item-copy">
-            <h3>Blueberry &amp; Mint</h3>
-            <p dir="rtl">بلوبيري ونعنع</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="watermelon &amp; mint بطيخ ونعنع">
-          <div class="item-copy">
-            <h3>Watermelon &amp; Mint</h3>
-            <p dir="rtl">بطيخ ونعنع</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="peach خوخ">
-          <div class="item-copy">
-            <h3>Peach</h3>
-            <p dir="rtl">خوخ</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="mango مانجو">
-          <div class="item-copy">
-            <h3>Mango</h3>
-            <p dir="rtl">مانجو</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="love 66 لوف 66">
-          <div class="item-copy">
-            <h3>Love 66</h3>
-            <p dir="rtl">لوف 66</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="lady killer ليدي كيلر">
-          <div class="item-copy">
-            <h3>Lady Killer</h3>
-            <p dir="rtl">ليدي كيلر</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-        <article class="menu-item" data-search="calma shisha أرجيلة كالما">
-          <div class="item-copy">
-            <h3>Calma Shisha</h3>
-            <p dir="rtl">أرجيلة كالما</p>
-          </div>
-          <span class="price" data-price=""></span>
-        </article>
-        
-      </div>
-    </section>
-    
-    <div id="empty" class="empty">No items found / لا توجد نتائج</div>
-  </main>
-
-  <footer>
-    <strong>Calma</strong><br>
-    Digital Menu
-  </footer>
-
   <script>
-    const search = document.getElementById('search');
-    const items = [...document.querySelectorAll('.menu-item')];
-    const sections = [...document.querySelectorAll('.menu-section')];
-    const empty = document.getElementById('empty');
+    const searchInput = document.getElementById('search');
+    const items = document.querySelectorAll('.item');
+    const sections = document.querySelectorAll('.section');
 
-    search.addEventListener('input', () => {
-      const q = search.value.trim().toLowerCase();
-      let visible = 0;
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim().toLowerCase();
+      
       items.forEach(item => {
-        const match = item.dataset.search.includes(q);
-        item.classList.toggle('hidden', !match);
-        if (match) visible++;
+        const hay = (item.dataset.search || '').toLowerCase();
+        if(hay.includes(q)) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
       });
+
       sections.forEach(section => {
-        const hasVisible = [...section.querySelectorAll('.menu-item')].some(i => !i.classList.contains('hidden'));
-        section.classList.toggle('hidden', !hasVisible);
+        const visibleItems = section.querySelectorAll('.item:not(.hidden)');
+        if(visibleItems.length === 0) {
+          section.classList.add('hidden');
+        } else {
+          section.classList.remove('hidden');
+        }
       });
-      empty.style.display = visible ? 'none' : 'block';
     });
 
-    document.querySelectorAll('.chip').forEach(button => {
-      button.addEventListener('click', () => {
-        document.getElementById(button.dataset.target).scrollIntoView({behavior:'smooth'});
+    const navLinks = document.querySelectorAll('.cat-pill');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 120) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').includes(current)) {
+          link.classList.add('active');
+          link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
       });
     });
   </script>
