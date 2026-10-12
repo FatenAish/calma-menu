@@ -1,22 +1,13 @@
-CALMA MENU — GitHub Pages
+CALMA MENU — 7th Circle
 
-1) Create a new GitHub repository, for example: calma-menu
-2) Upload index.html to the repository root.
-3) Open: Settings > Pages
-4) Under Build and deployment choose:
-   Source: Deploy from a branch
-   Branch: main / (root)
-5) Save.
-6) GitHub will give you a public link such as:
-   https://USERNAME.github.io/calma-menu/
+Live menu: https://fatenaish.github.io/calma-menu/
 
-PRICES
-Prices are intentionally hidden because no prices were provided yet.
-Each menu item contains:
-<span class="price" data-price=""></span>
+The menu contains 120 products. Each section displays one product per row: photo, English name with its Arabic translation, and price in JOD.
 
-You can later replace it with, for example:
-<span class="price">3.50 JD</span>
+7th Circle is the only branch shown.
 
-After the final GitHub Pages link is ready, create one QR code for that URL.
-Future menu edits will not require changing the QR code.
+The displayed prices are suggested JOD prices selected for this menu. To change a price, edit its visible amount and matching data-price value in index.html. Keep the Arabic and English names together when updating an item.
+
+GitHub Pages publishes from main at the repository root. The .nojekyll file keeps this a static website. The assets folder contains the header and category photos; product photos are embedded in index.html.
+
+Commit future changes to main. The menu URL stays the same, so a QR code using this URL can continue to be used.
