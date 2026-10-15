@@ -1,0 +1,4 @@
+# Calma is a static HTML menu with no build step.
+[build]
+  command = ""
+  publish = "."
