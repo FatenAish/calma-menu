@@ -103,4 +103,25 @@
   if ([...section.querySelectorAll('article.product-card')].length !== 84) {
     console.error('Calma drink list count did not match the approved file');
   }
+
+  // Snacks: keep popcorn only, priced at exactly 1.00 JOD.
+  const snackItems = new Map(
+    [...document.querySelectorAll('article.product-card[data-menu-name]')]
+      .filter(card => ['Popcorn', 'Mixed Nuts', 'Chips', 'Corn'].includes(card.dataset.menuName))
+      .map(card => [card.dataset.menuName, card])
+  );
+  const popcorn = snackItems.get('Popcorn');
+  if (popcorn) {
+    const price = popcorn.querySelector('.price');
+    if (price) {
+      price.textContent = '1.00';
+      price.setAttribute('data-price', '1.00');
+      price.setAttribute('aria-label', '1.00 JOD');
+    }
+    for (const extra of ['Mixed Nuts', 'Chips', 'Corn']) {
+      snackItems.get(extra)?.remove();
+    }
+  } else {
+    console.warn('Calma: could not find popcorn in Snacks');
+  }
 })();
