@@ -46,7 +46,7 @@
     ['Hot Hibiscus','1.50'],
     ['Iced Hibiscus','1.50'],
     ['Ginger Tea','1.50'],
-    ['Honey Lemon','2.00'],
+    ['Honey Lemon','1.50'],
     ['Water','0.50']
   ]);
   const regularTeaSizes = new Set(['Black Tea','Green Tea','Cardamom Tea']);
