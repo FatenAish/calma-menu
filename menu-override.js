@@ -1,9 +1,56 @@
 /* Calma drinks menu approved list. Non-drink sections are preserved unchanged. */
 (() => {
-  const menu = [["hot","Espresso Single","إسبريسو سنجل"],["hot","Espresso Double","إسبريسو دبل"],["hot","Americano","أمريكانو"],["hot","American Coffee","قهوة أمريكية"],["hot","Flat White","فلات وايت"],["hot","Cortado","كورتادو"],["hot","Cappuccino","كابتشينو"],["hot","Latte","لاتيه"],["hot","Espresso Macchiato","إسبريسو ماكياتو"],["hot","Caramel Macchiato","كراميل ماكياتو"],["hot","Spanish Latte","سبانش لاتيه"],["hot","Dark Mocha","دارك موكا"],["hot","Vanilla Latte","فانيلا لاتيه"],["hot","Hazelnut Latte","هيزلنت لاتيه"],["hot","Caramel Latte","كراميل لاتيه"],["hot","Honey Latte","هوني لاتيه"],["hot","V60","قهوة V60"],["cold","Iced Americano","آيس أمريكانو"],["cold","Iced Latte","آيس لاتيه"],["cold","Iced Spanish Latte","آيس سبانش لاتيه"],["cold","Iced Caramel Macchiato","آيس كراميل ماكياتو"],["cold","Iced Dark Mocha","آيس دارك موكا"],["cold","Iced Vanilla Latte","آيس فانيلا لاتيه"],["cold","Iced Hazelnut Latte","آيس هيزلنت لاتيه"],["cold","Iced V60","آيس V60"],["cold","Iced Shaken Espresso","شيكن إسبريسو"],["cold","Affogato","أفوغاتو"],["frappes","Coffee Frappe","كوفي فرابيه"],["frappes","Caramel Frappe","كراميل فرابيه"],["frappes","Vanilla Frappe","فانيلا فرابيه"],["frappes","Mocha Frappe","موكا فرابيه"],["frappes","Chocolate Frappe","شوكولاتة فرابيه"],["frappes","Hazelnut Frappe","هيزلنت فرابيه"],["milkshakes","Vanilla Milkshake","فانيلا ميلك شيك"],["milkshakes","Chocolate Milkshake","شوكولاتة ميلك شيك"],["milkshakes","Strawberry Milkshake","فراولة ميلك شيك"],["milkshakes","Mango Milkshake","مانجا ميلك شيك"],["milkshakes","Caramel Milkshake","كراميل ميلك شيك"],["milkshakes","Banana Milkshake","موز ميلك شيك"],["milkshakes","Banana Chocolate Milkshake","موز شوكولاتة ميلك شيك"],["juices","Orange Juice","عصير برتقال"],["juices","Lemon Mint","ليمون ونعنع"],["juices","Strawberry Juice","عصير فراولة"],["juices","Mango Juice","عصير مانجا"],["juices","Mango Strawberry","مانجا وفراولة"],["juices","Banana Milk","موز بالحليب"],["juices","Strawberry Banana","فراولة وموز"],["juices","Orange Mango","برتقال ومانجا"],["juices","Avocado Juice with Honey & Nuts","عصير أفوكادو بالعسل والمكسرات"],["juices","Kiwi Lemon Mint","كيوي وليمون ونعنع"],["juices","Mango Smoothie","مانجا سموذي"],["juices","Strawberry Smoothie","فراولة سموذي"],["mojitos","Classic Mojito","موهيتو كلاسيك"],["mojitos","Passion Fruit Mojito","باشن فروت موهيتو"],["mojitos","Strawberry Mojito","فراولة موهيتو"],["mojitos","Blue Lagoon","بلو لاغون"],["mojitos","Mango Tango","مانجا تانجو"],["mojitos","Sunset","صن سيت"],["mojitos","Kiwi Mojito","كيوي موهيتو"],["mojitos","Strawberry Passion","فراولة باشن فروت"],["tea","Iced Hibiscus","كركديه بارد"],["tea","Lemon Iced Tea","آيس تي ليمون"],["tea","Classic Hot Chocolate","هوت تشوكليت"],["tea","Dark Hot Chocolate","دارك هوت تشوكليت"],["tea","Caramel Hot Chocolate","كراميل هوت تشوكليت"],["tea","Hazelnut Hot Chocolate","هيزلنت هوت تشوكليت"],["tea","Classic Nescafe","نسكافيه"],["tea","Nescafe with Milk","نسكافيه بالحليب"],["tea","Iced Nescafe","آيس نسكافيه"],["tea","Black Tea","شاي أحمر"],["tea","Green Tea","شاي أخضر"],["tea","Cardamom Tea","شاي هيل"],["tea","Milk Tea","شاي بالحليب"],["tea","Chamomile","بابونج"],["tea","Anise","يانسون"],["tea","Sage","ميرمية"],["tea","Zhourat","زهورات"],["tea","Hot Hibiscus","كركديه ساخن"],["tea","Ginger Tea","زنجبيل"],["tea","Honey Lemon","زنجبيل وليمون"],["others","Barbican","مشروب شعير (نكهات)"],["others","Matrix","ماتريكس"],["others","Energy Drink","مشروب طاقة"],["others","Water","مياه"]];
+  const menu = [["hot","Espresso Single","إسبريسو سنجل"],["hot","Espresso Double","إسبريسو دبل"],["hot","Americano","أمريكانو"],["hot","American Coffee","قهوة أمريكية"],["hot","Flat White","فلات وايت"],["hot","Cortado","كورتادو"],["hot","Cappuccino","كابتشينو"],["hot","Latte","لاتيه"],["hot","Espresso Macchiato","إسبريسو ماكياتو"],["hot","Caramel Macchiato","كراميل ماكياتو"],["hot","Spanish Latte","سبانش لاتيه"],["hot","Dark Mocha","دارك موكا"],["hot","Vanilla Latte","فانيلا لاتيه"],["hot","Hazelnut Latte","هيزلنت لاتيه"],["hot","Caramel Latte","كراميل لاتيه"],["hot","Honey Latte","هوني لاتيه"],["hot","V60","قهوة V60 (إثيوبي، كولومبي، برازيلي)"],["cold","Iced Americano","آيس أمريكانو"],["cold","Iced Latte","آيس لاتيه"],["cold","Iced Spanish Latte","آيس سبانش لاتيه"],["cold","Iced Caramel Macchiato","آيس كراميل ماكياتو"],["cold","Iced Dark Mocha","آيس دارك موكا"],["cold","Iced Vanilla Latte","آيس فانيلا لاتيه"],["cold","Iced Hazelnut Latte","آيس هيزلنت لاتيه"],["cold","Iced V60","آيس V60 (إثيوبي، كولومبي، برازيلي)"],["cold","Iced Shaken Espresso","شيكن إسبريسو"],["cold","Affogato","أفوغاتو"],["frappes","Coffee Frappe","كوفي فرابيه"],["frappes","Caramel Frappe","كراميل فرابيه"],["frappes","Vanilla Frappe","فانيلا فرابيه"],["frappes","Mocha Frappe","موكا فرابيه"],["frappes","Chocolate Frappe","شوكولاتة فرابيه"],["frappes","Hazelnut Frappe","هيزلنت فرابيه"],["milkshakes","Vanilla Milkshake","فانيلا ميلك شيك"],["milkshakes","Chocolate Milkshake","شوكولاتة ميلك شيك"],["milkshakes","Strawberry Milkshake","فراولة ميلك شيك"],["milkshakes","Mango Milkshake","مانجا ميلك شيك"],["milkshakes","Caramel Milkshake","كراميل ميلك شيك"],["milkshakes","Banana Milkshake","موز ميلك شيك"],["milkshakes","Banana Chocolate Milkshake","موز شوكولاتة ميلك شيك"],["juices","Orange Juice","عصير برتقال"],["juices","Lemon Mint","ليمون ونعنع"],["juices","Strawberry Juice","عصير فراولة"],["juices","Mango Juice","عصير مانجا"],["juices","Mango Strawberry","مانجا وفراولة"],["juices","Banana Milk","موز بالحليب"],["juices","Strawberry Banana","فراولة وموز"],["juices","Orange Mango","برتقال ومانجا"],["juices","Avocado Juice with Honey & Nuts","عصير أفوكادو بالعسل والمكسرات"],["juices","Kiwi Lemon Mint","كيوي وليمون ونعنع"],["juices","Mango Smoothie","مانجا سموذي"],["juices","Strawberry Smoothie","فراولة سموذي"],["mojitos","Classic Mojito","موهيتو كلاسيك"],["mojitos","Passion Fruit Mojito","باشن فروت موهيتو"],["mojitos","Strawberry Mojito","فراولة موهيتو"],["mojitos","Blue Lagoon","بلو لاغون"],["mojitos","Mango Tango","مانجا تانجو"],["mojitos","Sunset","صن سيت"],["mojitos","Kiwi Mojito","كيوي موهيتو"],["mojitos","Strawberry Passion","فراولة باشن فروت"],["tea","Iced Hibiscus","كركديه بارد"],["tea","Lemon Iced Tea","آيس تي ليمون"],["tea","Classic Hot Chocolate","هوت تشوكليت"],["tea","Dark Hot Chocolate","دارك هوت تشوكليت"],["tea","Caramel Hot Chocolate","كراميل هوت تشوكليت"],["tea","Hazelnut Hot Chocolate","هيزلنت هوت تشوكليت"],["tea","Classic Nescafe","نسكافيه"],["tea","Nescafe with Milk","نسكافيه بالحليب"],["tea","Iced Nescafe","آيس نسكافيه"],["tea","Black Tea","شاي أحمر"],["tea","Green Tea","شاي أخضر"],["tea","Cardamom Tea","شاي هيل"],["tea","Karak Tea","شاي كرك"],["tea","Chamomile","بابونج"],["tea","Anise","يانسون"],["tea","Sage","ميرمية"],["tea","Zhourat","زهورات"],["tea","Hot Hibiscus","كركديه ساخن"],["tea","Ginger Tea","زنجبيل"],["tea","Honey Lemon","زنجبيل وليمون"],["others","Barbican","مشروب شعير (نكهات)"],["others","Matrix","ماتريكس"],["others","Energy Drink","مشروب طاقة"],["others","Water","مياه"]];
   const labels = [["hot","Hot Coffee","القهوة الساخنة"],["cold","Cold Coffee","القهوة الباردة"],["frappes","Frappes","فرابيه"],["milkshakes","Milkshakes","ميلك شيك"],["juices","Juices & Smoothies","عصائر وسموذي"],["mojitos","Mojitos","موهيتو"],["tea","Chocolate, Tea & Herbs","شوكولاتة وشاي وأعشاب"],["others","Other Drinks","مشروبات أخرى"]];
   const matching = {"American Coffee":"American Filter Coffee","Latte":"Coffee Latte","Caramel Macchiato":"Hot Caramel Macchiato","V60":"Hot V60","Iced Shaken Espresso":"Iced Shaking","Mango Strawberry":"Mango & Strawberry","Banana Milk":"Banana with Milk","Lemon Mint":"Lemon & Mint","Blue Lagoon":"Blue Lagoon Mojito","Mango Tango":"Mango Tango Mojito","Sunset":"Sunset Mojito","Classic Hot Chocolate":"Hot Chocolate","Zhourat":"Herbal Flower Tea","Hot Hibiscus":"Hibiscus"};
   const photoFallback = {"Cortado":"Flat White","Vanilla Latte":"Coffee Latte","Hazelnut Latte":"Coffee Latte","Caramel Latte":"Hot Caramel Macchiato","Honey Latte":"Spanish Latte","Iced Vanilla Latte":"Iced Latte","Iced Hazelnut Latte":"Iced Latte","Affogato":"Espresso Double","Coffee Frappe":"Caramel Frappe","Mocha Frappe":"Black Forest Frappe","Chocolate Frappe":"Black Forest Frappe","Hazelnut Frappe":"Vanilla Frappe","Mango Milkshake":"Strawberry Milkshake","Caramel Milkshake":"Vanilla Milkshake","Banana Milkshake":"Vanilla Milkshake","Banana Chocolate Milkshake":"Chocolate Milkshake","Strawberry Banana":"Strawberry Juice","Orange Mango":"Mango Juice","Kiwi Lemon Mint":"Kiwi & Lemon","Mango Smoothie":"Mango Juice","Strawberry Smoothie":"Strawberry Juice","Classic Mojito":"Sunset Mojito","Passion Fruit Mojito":"Berry Breeze Mojito","Strawberry Mojito":"Berry Breeze Mojito","Kiwi Mojito":"Berry Breeze Mojito","Strawberry Passion":"Berry Breeze Mojito","Iced Hibiscus":"Iced Tea","Lemon Iced Tea":"Iced Tea","Dark Hot Chocolate":"Hot Chocolate","Caramel Hot Chocolate":"Hot Chocolate","Hazelnut Hot Chocolate":"Hot Chocolate","Classic Nescafe":"Nescafe with Milk","Iced Nescafe":"Iced Latte","Black Tea":"Tea Cup","Green Tea":"Tea Cup","Cardamom Tea":"Tea Cup","Milk Tea":"Karak Tea","Chamomile":"Herbs","Anise":"Herbs","Sage":"Herbs","Ginger Tea":"Herbs","Honey Lemon":"Herbs"};
+  // Prices in Jordanian dinars. Categories with no approved new pricing retain
+  // their existing prices; explicit items override their category defaults.
+  const fixedPrices = new Map([
+    ['Americano','2.00'],
+    ['American Coffee','2.00'],
+    ['Cappuccino','2.00'],
+    ['Cortado','2.75'],
+    ['Caramel Macchiato','2.75'],
+    ['Vanilla Latte','2.75'],
+    ['Hazelnut Latte','2.75'],
+    ['Caramel Latte','2.75'],
+    ['V60','3.50'],
+    ['Iced V60','3.50'],
+    ['Iced Americano','2.50'],
+    ['Iced American Coffee','2.50'],
+    ['Avocado Juice with Honey & Nuts','3.50'],
+    ['Classic Hot Chocolate','2.00'],
+    ['Dark Hot Chocolate','2.00'],
+    ['Caramel Hot Chocolate','2.00'],
+    ['Hazelnut Hot Chocolate','2.00'],
+    ['Lemon Iced Tea','1.75'],
+    ['Barbican','1.75'],
+    ['Matrix','1.25'],
+    ['Black Tea','1.50'],
+    ['Green Tea','1.50'],
+    ['Cardamom Tea','1.50'],
+    ['Karak Tea','2.00'],
+    ['Milk Tea','2.00'],
+    ['Chamomile','1.50'],
+    ['Anise','1.50'],
+    ['Sage','1.50'],
+    ['Zhourat','1.50'],
+    ['Hot Hibiscus','1.50'],
+    ['Iced Hibiscus','1.50'],
+    ['Ginger Tea','1.50'],
+    ['Honey Lemon','1.50'],
+    ['Water','0.50']
+  ]);
+  const approvedPrice = (name, category) => {
+    if (fixedPrices.has(name)) return fixedPrices.get(name);
+    if (category === 'frappes') return '3.50';
+    if (category === 'milkshakes' || category === 'juices') return '3.00';
+    if (category === 'hot') return '2.50';
+    if (category === 'cold') return '3.00';
+    if (category === 'tea' && (name.includes('Nescafe') || name.includes('Hot Chocolate'))) return name.includes('Hot Chocolate') ? '2.00' : name.startsWith('Iced') ? '3.00' : '2.50';
+    return null;
+  };
   const section = document.getElementById('hotDrinks');
   if (!section) return;
   const originals = new Map(
@@ -20,7 +67,7 @@
       return;
     }
   }
-  const createCard = (name, ar) => {
+  const createCard = (name, ar, category) => {
     const source = originals.get(matching[name] || name);
     const photo = source || originals.get(photoFallback[name]);
     const card = document.createElement('article');
@@ -62,17 +109,20 @@
     const cost = document.createElement('div');
     cost.className = 'product-price';
     cost.dir = 'ltr';
-    const priceNode = source?.querySelector('.price');
-    if (priceNode) {
-      cost.append(priceNode.cloneNode(true));
-    } else {
-      const noPrice = document.createElement('span');
-      noPrice.className = 'price';
-      noPrice.setAttribute('data-price', '');
-      noPrice.setAttribute('aria-label', 'Price to be announced');
-      noPrice.textContent = '—';
-      cost.append(noPrice);
+    const approved = approvedPrice(name, category);
+    const sourcePrice = source?.querySelector('.price');
+    const priceNode = sourcePrice?.cloneNode(true) || document.createElement('span');
+    priceNode.classList.add('price');
+    if (approved !== null) {
+      priceNode.textContent = approved;
+      priceNode.setAttribute('data-price', approved);
+      priceNode.setAttribute('aria-label', approved + ' JOD');
+    } else if (!sourcePrice) {
+      priceNode.setAttribute('data-price', '');
+      priceNode.setAttribute('aria-label', 'Price to be announced');
+      priceNode.textContent = '—';
     }
+    cost.append(priceNode);
     card.append(media, copy, cost);
     return card;
   };
@@ -80,7 +130,7 @@
   for (const [tab, grid] of groups) {
     const fragment = document.createDocumentFragment();
     for (const [category, name, ar] of menu) {
-      if (category === tab) fragment.append(createCard(name, ar));
+      if (category === tab) fragment.append(createCard(name, ar, category));
     }
     grid.replaceChildren(fragment);
   }
