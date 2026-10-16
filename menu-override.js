@@ -33,9 +33,9 @@
     ['Iced Tea','1.75'],
     ['Barbican','1.75'],
     ['Matrix','1.25'],
-    ['Black Tea','1.25'],
-    ['Green Tea','1.25'],
-    ['Cardamom Tea','1.25'],
+    ['Black Tea','1.50'],
+    ['Green Tea','1.50'],
+    ['Cardamom Tea','1.50'],
     ['Karak Tea','2.00'],
     ['Milk Tea','2.00'],
     ['Chamomile','1.50'],
@@ -50,7 +50,7 @@
   ]);
   const regularTeaSizes = new Set(['Black Tea','Green Tea','Cardamom Tea']);
   // Served by cup or pot; Karak tea and herbs keep their own prices.
-  const teaSizes = [['كاسة','1.25'],['إبريق','3.00']];
+  const teaSizes = [['كاسة','1.50'],['إبريق','3.00']];
   const teaStyle = document.createElement('style');
   teaStyle.textContent = '.product-price.calma-tea-prices{display:flex;flex-direction:column;align-items:flex-end;gap:5px;min-width:118px}.calma-tea-option{display:flex;align-items:baseline;justify-content:flex-end;gap:9px;width:100%;white-space:nowrap}.calma-tea-option .calma-tea-size{font-size:13px;color:#866751;direction:rtl;font-weight:400}.calma-tea-option .price{font-size:18px;font-weight:700;color:#60432e}@media(max-width:460px){.product-price.calma-tea-prices{min-width:90px}.calma-tea-option{gap:5px}.calma-tea-option .calma-tea-size{font-size:12px}.calma-tea-option .price{font-size:16px}}';
   document.head.append(teaStyle);
