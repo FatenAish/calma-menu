@@ -5,7 +5,7 @@
     ['burger','Burgers','البرغر'],
     ['chicken','Chicken Sandwiches','ساندويشات الدجاج'],
     ['wrap','Wraps','الراب'],
-    ['box','Chicken Boxes','بوكسات الدجاج'],
+    ['plate','Chicken Plates','أطباق الدجاج'],
     ['rice','Rice Bowls','أطباق الأرز'],
     ['salad','Salads','السلطات'],
     ['side','Sides','الإضافات']
@@ -24,10 +24,10 @@
     ['chicken','Spicy Crispy Chicken Sandwich','ساندويش دجاج كرسبي حار','4.50','5.80',['Spicy Chicken']],
     ['wrap','Popcorn Chicken Wrap','راب دجاج بوب كورن','2.99','3.50',['Chicken Wrap']],
     ['wrap','Beef & Vegetables Wrap','راب لحم بالخضار','2.50','3.50',['Beef Wrap']],
-    ['box','Nashville Chicken Box','بوكس دجاج ناشفيل','5.90',null,['Hot Chicken Box','Spicy Chicken Box']],
-    ['box','Spicy Chicken Box','بوكس دجاج حار','5.90',null,['Spicy Chicken Box']],
-    ['box','Classic Chicken Box','بوكس دجاج كلاسيك','5.30',null,['Classic Chicken Box']],
-    ['box','Chicken Tenders Box','بوكس أصابع الدجاج المقرمشة','4.50',null,['Chicken Tenders']],
+    ['plate','Nashville Chicken Plate','طبق دجاج ناشفيل','5.90',null,[],'https://images.unsplash.com/photo-1730900737724-5b752e1ed3dd?w=420&auto=format&fit=crop&q=75'],
+    ['plate','Spicy Chicken Plate','طبق دجاج حار','5.90',null,[],'https://images.unsplash.com/photo-1567529854970-ce2c4207e242?w=420&auto=format&fit=crop&q=75'],
+    ['plate','Classic Chicken Plate','طبق دجاج كلاسيك','5.30',null,[],'https://images.unsplash.com/photo-1607329367978-0a651fdd8edb?w=420&auto=format&fit=crop&q=75'],
+    ['plate','Chicken Tenders Plate','طبق أصابع الدجاج المقرمشة','4.50',null,[],'https://images.unsplash.com/photo-1605291581926-df4bf7ee3e89?w=420&auto=format&fit=crop&q=75'],
     ['rice','Crispy Chicken Rice Bowl','أرز بالدجاج المقرمش','3.50',null,['Chicken Rice Bowl','Rice Bowl'],'https://images.unsplash.com/photo-1603496987674-79600a000f55?w=420&auto=format&fit=crop&q=75'],
     ['salad','Chicken Tenders Salad','سلطة دجاج كرسبي','3.50',null,['Chicken Tenders Salad','Chicken Salad'],'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=420&auto=format&fit=crop&q=75'],
     ['salad','Caesar Salad','سلطة سيزر','2.50',null,['Caesar Salad'],'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=420&auto=format&fit=crop&q=75'],
@@ -75,8 +75,9 @@
       image.alt=ar+' | '+en;image.loading='lazy';
       const orig=findImage(imageNames);
       const fromOld=orig&&(orig.getAttribute('src')||orig.getAttribute('data-src'));
-      image.src=fromOld||fallback||'assets/category-foodmenu.webp';
-      image.onerror=()=>{image.onerror=null;image.src=fallback||'assets/category-foodmenu.webp';};
+      // Plate dishes must show food on plates, not the old branded takeaway boxes.
+      image.src=kind==='plate' ? fallback : (fromOld||fallback||'assets/category-foodmenu.webp');
+      image.onerror=()=>{image.onerror=null;image.src='assets/category-foodmenu.webp';};
       const name=create('h4','cf-name',en);
       const nameAr=create('span','', '('+ar+')');nameAr.lang='ar';nameAr.dir='rtl';name.append(nameAr);
       const prices=create('div','cf-prices');prices.dir='ltr';
