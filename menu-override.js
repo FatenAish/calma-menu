@@ -31,8 +31,9 @@
     ['Hot Chocolate','2.75'],
     ['Nescafe','2.50'],
     ['Iced Tea','1.75'],
-    ['Barbican','1.75'],
-    ['Matrix','1.25'],
+    ['Barbican','2.00'],
+    ['Matrix','1.50'],
+    ['Energy Drink','2.00'],
     ['Black Tea','1.50'],
     ['Green Tea','1.50'],
     ['Cardamom Tea','1.50'],
@@ -52,7 +53,7 @@
   // Served by cup or pot; Karak tea and herbs keep their own prices.
   const teaSizes = [['كاسة','1.50'],['إبريق','3.00']];
   const teaStyle = document.createElement('style');
-  teaStyle.textContent = '.product-price.calma-tea-prices{display:flex;flex-direction:column;align-items:flex-end;gap:5px;min-width:118px}.calma-tea-option{display:flex;align-items:baseline;justify-content:flex-end;gap:9px;width:100%;white-space:nowrap}.calma-tea-option .calma-tea-size{font-size:13px;color:#866751;direction:rtl;font-weight:400}.calma-tea-option .price{font-size:18px;font-weight:700;color:#60432e}@media(max-width:460px){.product-price.calma-tea-prices{min-width:90px}.calma-tea-option{gap:5px}.calma-tea-option .calma-tea-size{font-size:12px}.calma-tea-option .price{font-size:16px}}';
+  teaStyle.textContent = "\n/* Keep cup/pot prices inside the product card at every breakpoint. */\n.product-card .product-price.calma-tea-prices {\n  display:flex;\n  flex-direction:column;\n  align-items:stretch;\n  gap:6px;\n  width:126px;\n  min-width:126px;\n  max-width:126px;\n  box-sizing:border-box;\n  position:relative;\n  left:-30px;\n  padding:0;\n  overflow:visible;\n}\n.product-card .calma-tea-option {\n  display:grid;\n  grid-template-columns:minmax(0,1fr) 51px;\n  align-items:baseline;\n  column-gap:9px;\n  width:100%;\n  min-width:0;\n  box-sizing:border-box;\n  white-space:nowrap;\n}\n.product-card .calma-tea-option .calma-tea-size {\n  font-size:13px;\n  color:#866751;\n  direction:rtl;\n  text-align:right;\n  font-weight:400;\n}\n.product-card .calma-tea-option .price {\n  display:block;\n  width:51px;\n  min-width:51px;\n  text-align:right;\n  font-size:18px;\n  font-weight:700;\n  line-height:1.3;\n  color:#60432e;\n  white-space:nowrap;\n  font-variant-numeric:tabular-nums;\n}\n@media (max-width:580px) {\n  .product-card .product-price.calma-tea-prices {\n    width:105px;\n    min-width:105px;\n    max-width:105px;\n    left:-14px;\n  }\n  .product-card .calma-tea-option {\n    grid-template-columns:minmax(0,1fr) 44px;\n    column-gap:4px;\n  }\n  .product-card .calma-tea-option .calma-tea-size {font-size:12px}\n  .product-card .calma-tea-option .price {\n    width:44px;\n    min-width:44px;\n    font-size:16px;\n  }\n}";
   document.head.append(teaStyle);
   const approvedPrice = (name, category) => {
     if (fixedPrices.has(name)) return fixedPrices.get(name);
