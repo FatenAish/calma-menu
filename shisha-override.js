@@ -107,5 +107,21 @@
   root.replaceChildren(fragment);
   root.classList.add('calma-shisha');
   root.dataset.calmaShishaUpdated='true';
+  // Keep the Shisha section ahead of Drinks in the visible menu order.
+  const drinksSection=document.getElementById('hotDrinks');
+  if(drinksSection && root.parentElement &&
+     root!==drinksSection && !root.contains(drinksSection) && !drinksSection.contains(root)){
+    // Find the Drinks ancestor sharing Shisha's parent; move the complete section,
+    // not only its heading or product grid.
+    let drinksSibling=drinksSection;
+    while(drinksSibling && drinksSibling.parentElement!==root.parentElement){
+      drinksSibling=drinksSibling.parentElement;
+    }
+    if(drinksSibling && drinksSibling!==root){
+      root.parentElement.insertBefore(root,drinksSibling);
+    }else if(drinksSection.parentElement && !drinksSection.parentElement.contains(root)){
+      drinksSection.parentElement.insertBefore(root,drinksSection);
+    }
+  }
   console.info('Calma: shisha menu updated, '+products.length+' rows; water 0.50 JOD');
 })();
