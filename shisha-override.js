@@ -107,7 +107,7 @@
 
   // The Main Menu has separate image tiles, so move its SHISHA tile
   // ahead of BEVERAGES as well (do not remove the Main Menu tile image).
-  const tileText=node=>(node.textContent||'').replace(/\\s+/g,' ').trim();
+  const tileText=node=>(node.textContent||'').replace(/\s+/g,' ').trim();
   const shishaTileText=text=>/shisha/i.test(text) && /الأراجيل/.test(text);
   const beverageTileText=text=>/beverages/i.test(text) && /المشروبات/.test(text);
   const foodTileText=text=>/food/i.test(text) && /الطعام/.test(text);
