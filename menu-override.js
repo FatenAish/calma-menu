@@ -12,7 +12,7 @@
   // Validate images before replacing any visible content.
   for (const [tab, name] of menu) {
     const photoKey = matching[name] || name;
-    if (!originals.has(photoKey) && !originals.has(photoFallback[name])) {
+    if (name !== 'Avocado Juice with Honey & Nuts' && !originals.has(photoKey) && !originals.has(photoFallback[name])) {
       console.warn('Calma: image missing for', name);
     }
     if (!document.getElementById(tab + 'Products')) {
@@ -28,7 +28,14 @@
     card.dataset.menuName = name;
     const media = document.createElement('div');
     media.className = 'product-image-wrap';
-    if (photo?.querySelector('img')) {
+    if (name === 'Avocado Juice with Honey & Nuts') {
+      const image = document.createElement('img');
+      image.className = 'product-image';
+      image.src = 'assets/avocado-honey-nuts.webp';
+      image.alt = ar + ' | ' + name;
+      image.loading = 'lazy';
+      media.append(image);
+    } else if (photo?.querySelector('img')) {
       const image = photo.querySelector('img').cloneNode(true);
       image.alt = ar + ' | ' + name;
       image.loading = 'lazy';
