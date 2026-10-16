@@ -55,8 +55,6 @@
     console.warn('Calma: shisha section not located; other sections left unchanged.');
     return;
   }
-  const oldImage=root.querySelector('article.product-card img');
-  const signatureImage=(oldImage && (oldImage.getAttribute('src')||oldImage.getAttribute('data-src'))) || 'assets/category-shishamenu.webp';
   const style=document.createElement('style');
   style.textContent='.calma-shisha .cs-title{font-size:32px;font-weight:700;margin:5px 0;color:#221a14}.calma-shisha .cs-sub{font-size:17px;color:#81634f;margin:2px 0 22px}.calma-shisha .cs-group{margin:0 0 24px}.calma-shisha .cs-heading{font-size:22px;font-weight:700;color:#47362b;margin:10px 0}.calma-shisha .cs-heading span{display:block;font-size:15px;font-weight:400;color:#93735d;margin-top:2px}.calma-shisha .cs-list{border:1px solid #edddd0;background:#fff;border-radius:20px;padding:0 16px;overflow:hidden}.calma-shisha .cs-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;padding:15px 0;border-bottom:1px solid #eee0d4}.calma-shisha .cs-row:last-child{border-bottom:0}.calma-shisha .cs-row.cs-featured{grid-template-columns:82px minmax(0,1fr) auto}.calma-shisha .cs-img{width:82px;height:82px;border-radius:13px;object-fit:cover}.calma-shisha .cs-en{font-size:16px;font-weight:700;color:#231b15}.calma-shisha .cs-ar{font-size:16px;color:#84634c;line-height:1.5;margin-top:5px}.calma-shisha .cs-price{font-size:20px;font-weight:700;color:#694732;white-space:nowrap;text-align:right}.calma-shisha .cs-price small{display:block;font-size:11px;font-weight:400;color:#91745e}@media(max-width:500px){.calma-shisha .cs-row{gap:9px}.calma-shisha .cs-row.cs-featured{grid-template-columns:62px minmax(0,1fr) auto}.calma-shisha .cs-img{width:62px;height:62px}.calma-shisha .cs-en,.calma-shisha .cs-ar{font-size:14px}.calma-shisha .cs-price{font-size:17px}}';
   document.head.append(style);
@@ -73,14 +71,8 @@
   // One continuous box: signature, one special, all flavours, head replacement.
   const list=el('div','cs-list');
   for(const [group,name,arabic,value] of products){
-    const row=el('article','product-card cs-row'+(group==='Signature'?' cs-featured':''));
+    const row=el('article','product-card cs-row');
     row.dataset.menuName=name;
-    if(group==='Signature'){
-      const photo=el('img','cs-img');
-      photo.src=signatureImage;photo.alt='أرجيلة كالما';photo.loading='lazy';
-      photo.onerror=()=>{photo.onerror=null;photo.src='assets/category-shishamenu.webp';};
-      row.append(photo);
-    }
     const label=el('div','');
     label.append(el('div','cs-en',name));
     // Keep the flavour details in the Arabic name without double parentheses.
@@ -95,20 +87,50 @@
   root.replaceChildren(fragment);
   root.classList.add('calma-shisha');
   root.dataset.calmaShishaUpdated='true';
-  // Keep the Shisha section ahead of Drinks in the visible menu order.
+  // Reorder the physical menu section to appear before beverages.
   const drinksSection=document.getElementById('hotDrinks');
-  if(drinksSection && root.parentElement &&
-     root!==drinksSection && !root.contains(drinksSection) && !drinksSection.contains(root)){
-    // Find the Drinks ancestor sharing Shisha's parent; move the complete section,
-    // not only its heading or product grid.
-    let drinksSibling=drinksSection;
-    while(drinksSibling && drinksSibling.parentElement!==root.parentElement){
-      drinksSibling=drinksSibling.parentElement;
+  if(drinksSection && root!==drinksSection &&
+     !root.contains(drinksSection) && !drinksSection.contains(root)){
+    const shishaAncestors=[];
+    for(let node=root;node;node=node.parentElement) shishaAncestors.push(node);
+    const common=shishaAncestors.find(node=>node.contains(drinksSection));
+    if(common && common!==document.body && common!==document.documentElement){
+      let shishaBranch=root;
+      let drinksBranch=drinksSection;
+      while(shishaBranch.parentElement!==common) shishaBranch=shishaBranch.parentElement;
+      while(drinksBranch.parentElement!==common) drinksBranch=drinksBranch.parentElement;
+      if(shishaBranch!==drinksBranch) common.insertBefore(shishaBranch,drinksBranch);
+    }else if(root.parentElement===drinksSection.parentElement){
+      root.parentElement.insertBefore(root,drinksSection);
     }
-    if(drinksSibling && drinksSibling!==root){
-      root.parentElement.insertBefore(root,drinksSibling);
-    }else if(drinksSection.parentElement && !drinksSection.parentElement.contains(root)){
-      drinksSection.parentElement.insertBefore(root,drinksSection);
+  }
+
+  // The Main Menu has separate image tiles, so move its SHISHA tile
+  // ahead of BEVERAGES as well (do not remove the Main Menu tile image).
+  const tileText=node=>(node.textContent||'').replace(/\\s+/g,' ').trim();
+  const shishaTileText=text=>/shisha/i.test(text) && /الأراجيل/.test(text);
+  const beverageTileText=text=>/beverages/i.test(text) && /المشروبات/.test(text);
+  const foodTileText=text=>/food/i.test(text) && /الطعام/.test(text);
+  const grids=[...document.querySelectorAll('div,nav,section,ul')].filter(container=>{
+    const children=[...container.children];
+    if(children.length<3 || children.length>10) return false;
+    const contents=children.map(tileText);
+    return contents.some(shishaTileText)&&contents.some(beverageTileText)&&contents.some(foodTileText)
+      && contents.every(text=>text.length<220);
+  });
+  if(grids.length){
+    grids.sort((a,b)=>a.querySelectorAll('*').length-b.querySelectorAll('*').length);
+    const grid=grids[0];
+    const shishaCard=[...grid.children].find(card=>shishaTileText(tileText(card)));
+    const beveragesCard=[...grid.children].find(card=>beverageTileText(tileText(card)));
+    if(shishaCard && beveragesCard) grid.insertBefore(shishaCard,beveragesCard);
+  }else{
+    // Fallback: matching category cards as links inside a shared grid.
+    const nav=[...document.querySelectorAll('a,button,[role="button"]')];
+    const shishaCard=nav.find(card=>shishaTileText(tileText(card))&&tileText(card).length<150);
+    const beveragesCard=nav.find(card=>beverageTileText(tileText(card))&&tileText(card).length<150);
+    if(shishaCard && beveragesCard && shishaCard.parentElement===beveragesCard.parentElement){
+      shishaCard.parentElement.insertBefore(shishaCard,beveragesCard);
     }
   }
   console.info('Calma: shisha menu updated, '+products.length+' rows; water 0.50 JOD');
