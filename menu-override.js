@@ -33,9 +33,9 @@
     ['Iced Tea','1.75'],
     ['Barbican','1.75'],
     ['Matrix','1.25'],
-    ['Black Tea','1.50'],
-    ['Green Tea','1.50'],
-    ['Cardamom Tea','1.50'],
+    ['Black Tea','1.25'],
+    ['Green Tea','1.25'],
+    ['Cardamom Tea','1.25'],
     ['Karak Tea','2.00'],
     ['Milk Tea','2.00'],
     ['Chamomile','1.50'],
@@ -48,6 +48,12 @@
     ['Honey Lemon','1.50'],
     ['Water','0.50']
   ]);
+  const regularTeaSizes = new Set(['Black Tea','Green Tea','Cardamom Tea']);
+  // Served by cup or pot; Karak tea and herbs keep their own prices.
+  const teaSizes = [['كاسة','1.25'],['إبريق','3.00']];
+  const teaStyle = document.createElement('style');
+  teaStyle.textContent = '.product-price.calma-tea-prices{display:flex;flex-direction:column;align-items:flex-end;gap:5px;min-width:118px}.calma-tea-option{display:flex;align-items:baseline;justify-content:flex-end;gap:9px;width:100%;white-space:nowrap}.calma-tea-option .calma-tea-size{font-size:13px;color:#866751;direction:rtl;font-weight:400}.calma-tea-option .price{font-size:18px;font-weight:700;color:#60432e}@media(max-width:460px){.product-price.calma-tea-prices{min-width:90px}.calma-tea-option{gap:5px}.calma-tea-option .calma-tea-size{font-size:12px}.calma-tea-option .price{font-size:16px}}';
+  document.head.append(teaStyle);
   const approvedPrice = (name, category) => {
     if (fixedPrices.has(name)) return fixedPrices.get(name);
     if (category === 'frappes') return '3.50';
@@ -117,20 +123,40 @@
     const cost = document.createElement('div');
     cost.className = 'product-price';
     cost.dir = 'ltr';
-    const approved = approvedPrice(name, category);
-    const sourcePrice = source?.querySelector('.price');
-    const priceNode = sourcePrice?.cloneNode(true) || document.createElement('span');
-    priceNode.classList.add('price');
-    if (approved !== null) {
-      priceNode.textContent = approved;
-      priceNode.setAttribute('data-price', approved);
-      priceNode.setAttribute('aria-label', approved + ' JOD');
-    } else if (!sourcePrice) {
-      priceNode.setAttribute('data-price', '');
-      priceNode.setAttribute('aria-label', 'Price to be announced');
-      priceNode.textContent = '—';
+    if (regularTeaSizes.has(name)) {
+      cost.classList.add('calma-tea-prices');
+      for (const [size, amount] of teaSizes) {
+        const option = document.createElement('div');
+        option.className = 'calma-tea-option';
+        const label = document.createElement('span');
+        label.className = 'calma-tea-size';
+        label.lang = 'ar';
+        label.dir = 'rtl';
+        label.textContent = size;
+        const price = document.createElement('span');
+        price.className = 'price';
+        price.textContent = amount;
+        price.setAttribute('data-price', amount);
+        price.setAttribute('aria-label', size + ' ' + amount + ' JOD');
+        option.append(label, price);
+        cost.append(option);
+      }
+    } else {
+      const approved = approvedPrice(name, category);
+      const sourcePrice = source?.querySelector('.price');
+      const priceNode = sourcePrice?.cloneNode(true) || document.createElement('span');
+      priceNode.classList.add('price');
+      if (approved !== null) {
+        priceNode.textContent = approved;
+        priceNode.setAttribute('data-price', approved);
+        priceNode.setAttribute('aria-label', approved + ' JOD');
+      } else if (!sourcePrice) {
+        priceNode.setAttribute('data-price', '');
+        priceNode.setAttribute('aria-label', 'Price to be announced');
+        priceNode.textContent = '—';
+      }
+      cost.append(priceNode);
     }
-    cost.append(priceNode);
     card.append(media, copy, cost);
     return card;
   };
