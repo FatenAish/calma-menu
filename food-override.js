@@ -32,11 +32,11 @@
     ['salad','Chicken Tenders Salad','سلطة دجاج كرسبي','3.50',null,['Chicken Tenders Salad','Chicken Salad'],'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=420&auto=format&fit=crop&q=75'],
     ['salad','Caesar Salad','سلطة سيزر','2.50',null,['Caesar Salad'],'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=420&auto=format&fit=crop&q=75'],
     ['salad','Chicken Caesar Salad','سلطة سيزر بالدجاج','3.95',null,['Chicken Caesar Salad'],'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=420&auto=format&fit=crop&q=75'],
-    ['side','Jalapeño Bites','كرات هالبينو مقرمشة','1.99',null,['Jalapeno Bites','Jalapeño Bites'],'https://commons.wikimedia.org/wiki/Special:FilePath/Jalape%C3%B1o_poppers.jpg?width=420'],
-    ['side','Chicken Nuggets (6 Pieces)','ناجتس دجاج 6 قطع','2.00',null,['Nuggets','Chicken Nuggets'],'https://commons.wikimedia.org/wiki/Special:FilePath/Chicken_nuggets_on_a_plate.jpg?width=420'],
-    ['side','Chicken Nuggets (9 Pieces)','ناجتس دجاج 9 قطع','3.00',null,['Nuggets','Chicken Nuggets'],'https://commons.wikimedia.org/wiki/Special:FilePath/Chicken_nuggets_on_a_plate.jpg?width=420'],
+    ['side','Jalapeño Bites','كرات هالبينو مقرمشة','1.99',null,['Jalapeno Bites','Jalapeño Bites'],'https://images.unsplash.com/photo-1756652242630-5a90c89a99cd?auto=format&fit=crop&w=420&q=75'],
+    ['side','Chicken Nuggets (6 Pieces)','ناجتس دجاج 6 قطع','2.00',null,['Nuggets','Chicken Nuggets'],'https://images.unsplash.com/photo-1696265498747-efc4c0dd7b98?auto=format&fit=crop&w=420&q=75'],
+    ['side','Chicken Nuggets (9 Pieces)','ناجتس دجاج 9 قطع','3.00',null,['Nuggets','Chicken Nuggets'],'https://images.unsplash.com/photo-1696265498747-efc4c0dd7b98?auto=format&fit=crop&w=420&q=75'],
     ['side','French Fries','بطاطا مقلية','1.50',null,['French Fries','Fries'],'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=420&auto=format&fit=crop&q=75'],
-    ['side','Potato Wedges','بطاطا ودجز','2.00',null,['Potato Wedges','Wedges'],'https://commons.wikimedia.org/wiki/Special:FilePath/Potato_wedges.jpg?width=420']
+    ['side','Potato Wedges','بطاطا ودجز','2.00',null,['Potato Wedges','Wedges'],'https://images.unsplash.com/photo-1773848948025-275cc700d34a?auto=format&fit=crop&w=420&q=75']
   ];
   const norm = value => (value||'').toLowerCase().trim().replace(/\s+/g,' ');
   const originalCards = [...document.querySelectorAll('article.product-card[data-menu-name]')];
@@ -93,9 +93,6 @@
     }
     group.append(grid);fragment.append(group);
   }
-  const credit=create('p','cf-credits');
-  credit.innerHTML='بعض الصور توضيحية؛ صور إضافية من <a href="https://commons.wikimedia.org/wiki/File:Jalape%C3%B1o_poppers.jpg">Wikimedia Commons</a> (Drpoulette، CC BY 2.0)، <a href="https://commons.wikimedia.org/wiki/File:Chicken_nuggets_on_a_plate.jpg">Chicken Nuggets</a> و<a href="https://commons.wikimedia.org/wiki/File:Potato_wedges.jpg">Potato Wedges</a> (CC BY-SA 4.0).';
-  fragment.append(credit);
   root.replaceChildren(fragment);
   root.classList.add('calma-food');
   root.dataset.calmaFoodUpdated='true';
