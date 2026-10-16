@@ -53,6 +53,7 @@
   const approvedPrice = (name, category) => {
     if (fixedPrices.has(name)) return fixedPrices.get(name);
     if (category === 'frappes') return '3.50';
+    if (category === 'mojitos') return '3.00';
     if (category === 'milkshakes' || category === 'juices') return '3.00';
     if (category === 'hot') return '2.50';
     if (category === 'cold') return '3.00';
