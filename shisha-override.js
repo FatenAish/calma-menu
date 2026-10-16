@@ -57,6 +57,8 @@
   }
   const style=document.createElement('style');
   style.textContent='.calma-shisha .cs-title{font-size:32px;font-weight:700;margin:5px 0;color:#221a14}.calma-shisha .cs-sub{font-size:17px;color:#81634f;margin:2px 0 22px}.calma-shisha .cs-group{margin:0 0 24px}.calma-shisha .cs-heading{font-size:22px;font-weight:700;color:#47362b;margin:10px 0}.calma-shisha .cs-heading span{display:block;font-size:15px;font-weight:400;color:#93735d;margin-top:2px}.calma-shisha .cs-list{border:1px solid #edddd0;background:#fff;border-radius:20px;padding:0 16px;overflow:hidden}.calma-shisha .cs-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;padding:15px 0;border-bottom:1px solid #eee0d4}.calma-shisha .cs-row:last-child{border-bottom:0}.calma-shisha .cs-row.cs-featured{grid-template-columns:82px minmax(0,1fr) auto}.calma-shisha .cs-img{width:82px;height:82px;border-radius:13px;object-fit:cover}.calma-shisha .cs-en{font-size:16px;font-weight:700;color:#231b15}.calma-shisha .cs-ar{font-size:16px;color:#84634c;line-height:1.5;margin-top:5px}.calma-shisha .cs-price{font-size:20px;font-weight:700;color:#694732;white-space:nowrap;text-align:right}.calma-shisha .cs-price small{display:block;font-size:11px;font-weight:400;color:#91745e}@media(max-width:500px){.calma-shisha .cs-row{gap:9px}.calma-shisha .cs-row.cs-featured{grid-template-columns:62px minmax(0,1fr) auto}.calma-shisha .cs-img{width:62px;height:62px}.calma-shisha .cs-en,.calma-shisha .cs-ar{font-size:14px}.calma-shisha .cs-price{font-size:17px}}';
+  // Arabic-only, one-line shisha rows: item on the right and price on the left.
+  style.textContent += '.calma-shisha .cs-title{text-align:right;direction:rtl;margin-bottom:22px}.calma-shisha .cs-row{direction:rtl;grid-template-columns:minmax(0,1fr) auto}.calma-shisha .cs-row .cs-ar{font-size:17px;font-weight:500;color:#291e19;text-align:right;direction:rtl;margin-top:0}.calma-shisha .cs-row .cs-price{direction:ltr;text-align:left;justify-self:start}.calma-shisha .cs-row .cs-price small{text-align:left}.calma-shisha .cs-sub{display:none}';
   document.head.append(style);
   const el=(tag,cls,text)=>{
     const node=document.createElement(tag);
@@ -65,8 +67,7 @@
     return node;
   };
   const fragment=document.createDocumentFragment();
-  fragment.append(el('h2','cs-title','Shisha'));
-  const arTitle=el('p','cs-sub','الأراجيل');
+  const arTitle=el('h2','cs-title','الأراجيل');
   arTitle.lang='ar';arTitle.dir='rtl';fragment.append(arTitle);
   // One continuous box: signature, one special, all flavours, head replacement.
   const list=el('div','cs-list');
@@ -74,8 +75,6 @@
     const row=el('article','product-card cs-row');
     row.dataset.menuName=name;
     const label=el('div','');
-    label.append(el('div','cs-en',name));
-    // Keep the flavour details in the Arabic name without double parentheses.
     const arabicName=el('div','cs-ar',arabic);
     arabicName.lang='ar';arabicName.dir='rtl';label.append(arabicName);
     const price=el('div','cs-price',value);
