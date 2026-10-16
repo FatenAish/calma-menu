@@ -1,10 +1,8 @@
 /* CALMA shisha — verified order and prices, October 2026 */
 (() => {
   const products=[
-    ['Signature','Calma Signature','أرجيلة كالما سيجنتشر','5.50'],
-    ['Special','Special 1','سبيشل 1','5.00'],
-    ['Special','Special 2','سبيشل 2','5.00'],
-    ['Special','Special 3','سبيشل 3','5.00'],
+    ['Signature','Calma Signature','كالما سجنتشر (فانيلا بالكراميل)','5.50'],
+    ['Special','Calma Special','كالما سبيشل (إضافة خلطة)','5.00'],
     ['Flavours','Double Apple Mazaya','تفاحتين مزايا','4.00'],
     ['Flavours','Licorice','سوس','4.00'],
     ['Flavours','Mastic','مستكة','4.00'],
@@ -72,38 +70,28 @@
   fragment.append(el('h2','cs-title','Shisha'));
   const arTitle=el('p','cs-sub','الأراجيل');
   arTitle.lang='ar';arTitle.dir='rtl';fragment.append(arTitle);
-  const sections=[
-    ['Signature','Signature','سيجنتشر'],
-    ['Special','Special Shisha','أراجيل سبيشل'],
-    ['Flavours','Flavours','النكهات'],
-    ['Extras','Extras','الإضافات']
-  ];
-  for(const [type,en,ar] of sections){
-    const block=el('div','cs-group');
-    const heading=el('h3','cs-heading',en);
-    const titleAr=el('span','',ar);titleAr.lang='ar';titleAr.dir='rtl';
-    heading.append(titleAr);
-    const list=el('div','cs-list');
-    for(const [group,name,arabic,value] of products.filter(p=>p[0]===type)){
-      const row=el('article','product-card cs-row'+(type==='Signature'?' cs-featured':''));
-      row.dataset.menuName=name;
-      if(type==='Signature'){
-        const photo=el('img','cs-img');
-        photo.src=signatureImage;photo.alt='أرجيلة كالما';photo.loading='lazy';
-        photo.onerror=()=>{photo.onerror=null;photo.src='assets/category-shishamenu.webp';};
-        row.append(photo);
-      }
-      const label=el('div','');
-      label.append(el('div','cs-en',name));
-      const arabicName=el('div','cs-ar','('+arabic+')');
-      arabicName.lang='ar';arabicName.dir='rtl';label.append(arabicName);
-      const price=el('div','cs-price',value);
-      price.append(el('small','','JOD'));
-      row.append(label,price);
-      list.append(row);
+  // One continuous box: signature, one special, all flavours, head replacement.
+  const list=el('div','cs-list');
+  for(const [group,name,arabic,value] of products){
+    const row=el('article','product-card cs-row'+(group==='Signature'?' cs-featured':''));
+    row.dataset.menuName=name;
+    if(group==='Signature'){
+      const photo=el('img','cs-img');
+      photo.src=signatureImage;photo.alt='أرجيلة كالما';photo.loading='lazy';
+      photo.onerror=()=>{photo.onerror=null;photo.src='assets/category-shishamenu.webp';};
+      row.append(photo);
     }
-    block.append(heading,list);fragment.append(block);
+    const label=el('div','');
+    label.append(el('div','cs-en',name));
+    // Keep the flavour details in the Arabic name without double parentheses.
+    const arabicName=el('div','cs-ar',arabic);
+    arabicName.lang='ar';arabicName.dir='rtl';label.append(arabicName);
+    const price=el('div','cs-price',value);
+    price.append(el('small','','JOD'));
+    row.append(label,price);
+    list.append(row);
   }
+  fragment.append(list);
   root.replaceChildren(fragment);
   root.classList.add('calma-shisha');
   root.dataset.calmaShishaUpdated='true';
