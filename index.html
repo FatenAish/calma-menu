@@ -21,7 +21,7 @@
   <script>
     (async () => {
       try {
-        const response = await fetch('./original-menu.html', {cache:'no-store'});
+        const response = await fetch('./original-menu.html', {cache:'force-cache'});
         if (!response.ok) throw Error('Menu source unavailable');
         let html = await response.text();
         if (!html.includes('</body>')) throw Error('Menu source invalid');
