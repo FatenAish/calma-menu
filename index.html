@@ -25,7 +25,7 @@
         if (!response.ok) throw Error('Menu source unavailable');
         let html = await response.text();
         if (!html.includes('</body>')) throw Error('Menu source invalid');
-        html = html.replace(/<\/body>/i, '<script src="./menu-override.js?v=20261017-ginger-lemon-150"></' + 'script><script src="./food-override.js?v=20261016-nashville-tenders-only"></' + 'script><script src="./shisha-override.js?v=20261016-arabic-right-price-left"></' + 'script><script src="./food-visibility.js?v=20261017-hide-food"></' + 'script><script src="./menu-extras.js?v=20261017-honey-tea-only"></' + 'script></body>');
+        html = html.replace(/<\/body>/i, '<script src="./menu-override.js?v=20261017-turkish-coffee"></' + 'script><script src="./food-override.js?v=20261016-nashville-tenders-only"></' + 'script><script src="./shisha-override.js?v=20261016-arabic-right-price-left"></' + 'script><script src="./food-visibility.js?v=20261017-hide-food"></' + 'script><script src="./menu-extras.js?v=20261017-honey-tea-only"></' + 'script></body>');
         document.open();
         document.write(html);
         document.close();
