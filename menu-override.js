@@ -91,7 +91,14 @@
     card.dataset.menuName = name;
     const media = document.createElement('div');
     media.className = 'product-image-wrap';
-    if (name === 'Avocado Juice with Honey & Nuts') {
+    if (name === 'Turkish Coffee') {
+      const image = document.createElement('img');
+      image.className = 'product-image';
+      image.src = 'assets/turkish-coffee-user.webp';
+      image.alt = 'فنجان قهوة تركية | Turkish Coffee';
+      image.loading = 'lazy';
+      media.append(image);
+    } else if (name === 'Avocado Juice with Honey & Nuts') {
       const image = document.createElement('img');
       image.className = 'product-image';
       image.src = 'assets/avocado-honey-nuts.webp';
