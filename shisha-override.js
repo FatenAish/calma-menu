@@ -1,7 +1,7 @@
 /* CALMA shisha — verified order and prices, October 2026 */
 (() => {
   const products=[
-    ['Signature','Calma Signature','كالما سجنتشر (فانيلا بالكراميل)','6.00'],
+    ['Signature','Calma Signature','كالما سجنتشر (فانيلا، كسترد، موز)','6.00'],
     ['Special','Calma Special','كالما سبيشل (إضافة خلطة)','5.00'],
     ['Flavours','Double Apple Mazaya','تفاحتين مزايا','4.00'],
     ['Flavours','Licorice','سوس','4.00'],
