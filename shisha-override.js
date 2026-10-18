@@ -2,8 +2,8 @@
 (() => {
   const products=[
     ['Signature','Calma Signature','كالما سجنتشر (فانيلا، كسترد، موز)','6.00'],
-    ['Special','Special 1: Sunset Bliss','سبيشل ١: سنسيت بليس','5.00'],
-    ['Special','Special 2: Velvet Berry','سبيشل ٢: فيلفيت بيري','5.00'],
+    ['Special','Calma Special Sunset Bliss','كالما سبيشل سنسيت بليس','5.00'],
+    ['Special','Calma Special Velvet Berry','كالما سبيشل فيلفيت بيري','5.00'],
     ['Flavours','Double Apple Mazaya','تفاحتين مزايا','4.00'],
     ['Flavours','Licorice','سوس','4.00'],
     ['Flavours','Mastic','مستكة','4.00'],
