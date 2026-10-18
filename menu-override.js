@@ -95,6 +95,7 @@
       return;
     }
   }
+  const dedicatedPhotos = {"Hot Matcha":"assets/hot-matcha-calma.webp","Hot Hazelnut Matcha":"assets/hot-hazelnut-matcha-calma.webp","Hot Caramel Matcha":"assets/hot-caramel-matcha-calma.webp","Hot Vanilla Matcha":"assets/hot-vanilla-matcha-calma.webp","Iced Matcha":"assets/iced-matcha-calma.webp","Iced Hazelnut Matcha":"assets/iced-hazelnut-matcha-calma.webp","Iced Caramel Matcha":"assets/iced-caramel-matcha-calma.webp","Iced Vanilla Matcha":"assets/iced-vanilla-matcha-calma.webp","Iced Shaking":"assets/iced-shaking-calma.webp"};
   const createCard = (name, ar, category) => {
     const source = originals.get(matching[name] || name);
     const photo = source || originals.get(photoFallback[name]);
@@ -103,7 +104,14 @@
     card.dataset.menuName = name;
     const media = document.createElement('div');
     media.className = 'product-image-wrap';
-    if (name === 'Turkish Coffee') {
+    if (dedicatedPhotos[name]) {
+      const image = document.createElement('img');
+      image.className = 'product-image';
+      image.src = dedicatedPhotos[name];
+      image.alt = ar + ' | ' + name;
+      image.loading = 'lazy';
+      media.append(image);
+    } else if (name === 'Turkish Coffee') {
       const image = document.createElement('img');
       image.className = 'product-image';
       image.src = 'assets/turkish-coffee-user.webp';
