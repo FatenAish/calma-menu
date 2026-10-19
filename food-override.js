@@ -1,41 +1,178 @@
-/* Updated Calma food menu: 25 approved items, no Wily's images. */
+/* CALMA food menu reactivated 2026-10-19: 12 approved items, previous photos reused. */
 (() => {
   const categories = [
-    ['flat','Flat Sandwiches','ساندويشات الفلات'],
-    ['burger','Burgers','البرغر'],
-    ['chicken','Chicken Sandwiches','ساندويشات الدجاج'],
-    ['wrap','Wraps','الراب'],
-    ['plate','Chicken Plates','أطباق الدجاج'],
-    ['rice','Rice Bowls','أطباق الأرز'],
-    ['salad','Salads','السلطات'],
-    ['side','Sides','الإضافات']
-  ];
-  // [group, name, Arabic name, price, meal price, photo references, suitable fallback photo]
+    [
+        "meals",
+        "Meals",
+        "الوجبات"
+    ],
+    [
+        "fries",
+        "Fries",
+        "البطاطا"
+    ],
+    [
+        "nuggets",
+        "Nuggets",
+        "الناجتس"
+    ],
+    [
+        "salads",
+        "Salads",
+        "السلطات"
+    ]
+];
+  // [group, English name, Arabic name, JOD price, meal alternative, previous photo names, previous fallback photo]
   const items = [
-    ['flat','Beef & Cheese Flat','فلات لحم وجبنة','2.50','3.50',['Cheese Flat','Classic Flat']],
-    ['flat','Truffle Beef Flat','فلات لحم بالترافل','2.50','3.90',['Truffle Flat']],
-    ['flat','Classic Beef Flat','فلات لحم كلاسيك','2.50','3.50',['Classic Flat']],
-    ['burger','Double Beef & Cheese Burger','برغر لحم دبل بالجبنة','4.50','5.80',['Double Burger','Cheese Burger','Classic Burger']],
-    ['burger','Truffle Beef Burger','برغر لحم بالترافل','4.50','5.90',['Truffle Burger']],
-    ['burger','Classic Beef Burger','برغر لحم كلاسيك','4.50','5.80',['Classic Burger']],
-    ['burger','Cheese-Stuffed Beef Burger','برغر لحم محشي بالجبنة','3.30','4.20',['Stuffed Burger']],
-    ['chicken','Crispy Chicken & Cheese Toast','توست دجاج كرسبي بالجبنة','4.50','5.80',['Chicken Toast']],
-    ['chicken','Classic Crispy Chicken Sandwich','ساندويش دجاج كرسبي','2.99','3.99',['Crispy Chicken']],
-    ['chicken','Spicy Crispy Chicken Sandwich','ساندويش دجاج كرسبي حار','4.50','5.80',['Spicy Chicken']],
-    ['wrap','Popcorn Chicken Wrap','راب دجاج بوب كورن','2.99','3.50',['Chicken Wrap']],
-    ['wrap','Beef & Vegetables Wrap','راب لحم بالخضار','2.50','3.50',['Beef Wrap']],
-    ['plate','Nashville Chicken Plate','طبق دجاج ناشفيل','5.90',null,[],'https://images.unsplash.com/photo-1682970078535-cd0cf994ee96?auto=format&fit=crop&w=420&h=420&q=75'],
-    ['plate','Chicken Tenders Plate','طبق أصابع الدجاج المقرمشة','4.50',null,[],'https://images.pexels.com/photos/37228290/pexels-photo-37228290/free-photo-of-crispy-chicken-tenders-and-fries-with-sauces.jpeg?auto=compress&fit=crop&w=420&h=420'],
-    ['rice','Crispy Chicken Rice Bowl','أرز بالدجاج المقرمش','3.50',null,['Chicken Rice Bowl','Rice Bowl'],'https://images.unsplash.com/photo-1603496987674-79600a000f55?w=420&auto=format&fit=crop&q=75'],
-    ['salad','Chicken Tenders Salad','سلطة دجاج كرسبي','3.50',null,['Chicken Tenders Salad','Chicken Salad'],'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=420&auto=format&fit=crop&q=75'],
-    ['salad','Caesar Salad','سلطة سيزر','2.50',null,['Caesar Salad'],'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=420&auto=format&fit=crop&q=75'],
-    ['salad','Chicken Caesar Salad','سلطة سيزر بالدجاج','3.95',null,['Chicken Caesar Salad'],'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=420&auto=format&fit=crop&q=75'],
-    ['side','Jalapeño Bites','كرات هالبينو مقرمشة','1.99',null,['Jalapeno Bites','Jalapeño Bites'],'https://images.unsplash.com/photo-1756652242630-5a90c89a99cd?auto=format&fit=crop&w=420&q=75'],
-    ['side','Chicken Nuggets (6 Pieces)','ناجتس دجاج 6 قطع','2.00',null,['Nuggets','Chicken Nuggets'],'https://images.unsplash.com/photo-1696265498747-efc4c0dd7b98?auto=format&fit=crop&w=420&q=75'],
-    ['side','Chicken Nuggets (9 Pieces)','ناجتس دجاج 9 قطع','3.00',null,['Nuggets','Chicken Nuggets'],'https://images.unsplash.com/photo-1696265498747-efc4c0dd7b98?auto=format&fit=crop&w=420&q=75'],
-    ['side','French Fries','بطاطا مقلية','2.00',null,['French Fries','Fries'],'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=420&auto=format&fit=crop&q=75'],
-    ['side','Potato Wedges','بطاطا ودجز','2.50',null,['Potato Wedges','Wedges'],'https://images.unsplash.com/photo-1773848948025-275cc700d34a?auto=format&fit=crop&w=420&q=75']
-  ];
+    [
+        "meals",
+        "Beef Burger Meal",
+        "وجبة برغر لحمة",
+        "4.50",
+        null,
+        [
+            "Classic Burger",
+            "Classic Beef Burger",
+            "Double Burger",
+            "Cheese Burger"
+        ]
+    ],
+    [
+        "meals",
+        "Chicken Burger Meal",
+        "وجبة برغر دجاج",
+        "4.50",
+        null,
+        [
+            "Chicken Burger",
+            "Crispy Chicken",
+            "Classic Crispy Chicken Sandwich",
+            "Chicken Toast"
+        ]
+    ],
+    [
+        "meals",
+        "Chicken Tenders Meal",
+        "وجبة تندر",
+        "4.50",
+        null,
+        [
+            "Chicken Tenders Plate",
+            "Chicken Tenders",
+            "Tenders"
+        ],
+        "https://images.pexels.com/photos/37228290/pexels-photo-37228290/free-photo-of-crispy-chicken-tenders-and-fries-with-sauces.jpeg?auto=compress&fit=crop&w=420&h=420"
+    ],
+    [
+        "meals",
+        "Zinger Meal",
+        "وجبة زنجر",
+        "4.50",
+        null,
+        [
+            "Zinger",
+            "Spicy Chicken",
+            "Spicy Crispy Chicken Sandwich",
+            "Crispy Chicken"
+        ]
+    ],
+    [
+        "fries",
+        "French Fries",
+        "بطاطا عادية",
+        "2.00",
+        null,
+        [
+            "French Fries",
+            "Fries"
+        ],
+        "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=420&auto=format&fit=crop&q=75"
+    ],
+    [
+        "fries",
+        "Potato Wedges",
+        "بطاطا ويجز",
+        "2.25",
+        null,
+        [
+            "Potato Wedges",
+            "Wedges"
+        ],
+        "https://images.unsplash.com/photo-1773848948025-275cc700d34a?auto=format&fit=crop&w=420&q=75"
+    ],
+    [
+        "fries",
+        "Curly Fries",
+        "بطاطا كيرلي",
+        "2.50",
+        null,
+        [
+            "Curly Fries",
+            "Curly Potatoes",
+            "Curly Wedges",
+            "Curly"
+        ],
+        "assets/category-foodmenu.webp"
+    ],
+    [
+        "nuggets",
+        "Chicken Nuggets (6 Pieces)",
+        "ناجتس دجاج 6 حبات",
+        "2.25",
+        null,
+        [
+            "Nuggets",
+            "Chicken Nuggets"
+        ],
+        "https://images.unsplash.com/photo-1696265498747-efc4c0dd7b98?auto=format&fit=crop&w=420&q=75"
+    ],
+    [
+        "nuggets",
+        "Chicken Nuggets (9 Pieces)",
+        "ناجتس دجاج 9 حبات",
+        "3.25",
+        null,
+        [
+            "Nuggets",
+            "Chicken Nuggets"
+        ],
+        "https://images.unsplash.com/photo-1696265498747-efc4c0dd7b98?auto=format&fit=crop&w=420&q=75"
+    ],
+    [
+        "salads",
+        "Chicken Tenders Salad",
+        "سلطة تندر",
+        "3.50",
+        null,
+        [
+            "Chicken Tenders Salad",
+            "Chicken Salad"
+        ],
+        "https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=420&auto=format&fit=crop&q=75"
+    ],
+    [
+        "salads",
+        "Caesar Salad",
+        "سلطة سيزر",
+        "2.50",
+        null,
+        [
+            "Caesar Salad"
+        ],
+        "https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=420&auto=format&fit=crop&q=75"
+    ],
+    [
+        "salads",
+        "Chicken Caesar Salad",
+        "سلطة سيزر مع دجاج",
+        "4.00",
+        null,
+        [
+            "Chicken Caesar Salad"
+        ],
+        "https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=420&auto=format&fit=crop&q=75"
+    ]
+];
   const norm = value => (value||'').toLowerCase().trim().replace(/\s+/g,' ');
   const originalCards = [...document.querySelectorAll('article.product-card[data-menu-name]')];
   const photos = new Map(originalCards.map(card=>[norm(card.dataset.menuName),card.querySelector('img')]));
@@ -74,7 +211,7 @@
       const orig=findImage(imageNames);
       const fromOld=orig&&(orig.getAttribute('src')||orig.getAttribute('data-src'));
       // Plate dishes must show food on plates, not the old branded takeaway boxes.
-      image.src=kind==='plate' ? fallback : (fromOld||fallback||'assets/category-foodmenu.webp');
+      image.src=(en==='Chicken Tenders Meal' && fallback) ? fallback : (fromOld||fallback||'assets/category-foodmenu.webp');
       image.onerror=()=>{image.onerror=null;image.src='assets/category-foodmenu.webp';};
       const name=create('h4','cf-name',en);
       const nameAr=create('span','', '('+ar+')');nameAr.lang='ar';nameAr.dir='rtl';name.append(nameAr);
