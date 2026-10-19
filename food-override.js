@@ -142,7 +142,7 @@
         "salads",
         "Chicken Tenders Salad",
         "سلطة تندر",
-        "3.50",
+        "4.00",
         null,
         [
             "Chicken Tenders Salad",
@@ -154,7 +154,7 @@
         "salads",
         "Caesar Salad",
         "سلطة سيزر",
-        "2.50",
+        "3.00",
         null,
         [
             "Caesar Salad"
@@ -165,7 +165,7 @@
         "salads",
         "Chicken Caesar Salad",
         "سلطة سيزر مع دجاج",
-        "4.00",
+        "4.50",
         null,
         [
             "Chicken Caesar Salad"
