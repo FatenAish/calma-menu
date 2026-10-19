@@ -2,37 +2,72 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f0e9">
   <title>Calma Menu — 7th Circle</title>
   <style>
-    html,body {min-height:100%;margin:0;background:#f7f0e9;color:#4b382a}
-    body {display:flex;justify-content:center;align-items:center;font-family:Arial,sans-serif}
-    .loading {text-align:center;padding:25px}
-    .loading strong {font-size:32px;letter-spacing:.16em}
-    .loading p {font-size:14px}
-    .loading a {color:inherit}
+    html,body{min-height:100%;margin:0;background:#f7f0e9;color:#4b382a}
+    body{display:flex;justify-content:center;align-items:center;font-family:Arial,sans-serif}
+    .loading{text-align:center;padding:25px;max-width:340px}
+    .loading strong{font-size:32px;letter-spacing:.16em}
+    .loading p{font:15px/1.7 Arial,sans-serif}
+    .loading a{display:inline-block;color:#4b382a;font-weight:700;padding:12px 16px;border:1px solid #aa8d77;border-radius:12px}
+    progress{width:100%;accent-color:#7f614c}
   </style>
 </head>
 <body>
   <div class="loading" id="loading">
-    <strong>CALMA</strong><p lang="ar" dir="rtl">جاري تحميل منيو كالما</p>
+    <strong>CALMA</strong>
+    <p id="status" lang="ar" dir="rtl">جاري تحميل منيو كالما...</p>
+    <progress id="progress" max="100" value="0" aria-label="Menu loading progress"></progress>
+    <p id="alternative" style="display:none"><a href="./original-menu.html">فتح المنيو مباشرة / Open menu</a></p>
   </div>
   <script>
     (async () => {
+      const status=document.getElementById('status');
+      const progress=document.getElementById('progress');
+      const alternative=document.getElementById('alternative');
+      const controller=new AbortController();
+      const timeout=setTimeout(()=>controller.abort(),90000);
       try {
-        const response = await fetch('./original-menu.html', {cache:'force-cache'});
-        if (!response.ok) throw Error('Menu source unavailable');
-        let html = await response.text();
-        if (!html.includes('</body>')) throw Error('Menu source invalid');
+        const response=await fetch('./original-menu.html',{cache:'default',signal:controller.signal});
+        if(!response.ok)throw Error('Menu source unavailable: HTTP '+response.status);
+        const total=Number(response.headers.get('content-length'))||0;
+        let received=0;
+        let html;
+        if(response.body && response.body.getReader){
+          const reader=response.body.getReader();
+          const decoder=new TextDecoder();
+          const parts=[];
+          for(;;){
+            const {done,value}=await reader.read();
+            if(done)break;
+            received+=value.byteLength;
+            parts.push(decoder.decode(value,{stream:true}));
+            status.textContent=total?'جاري تحميل المنيو... '+Math.min(99,Math.round(received/total*100))+'٪':'جاري تحميل المنيو... '+(received/1048576).toFixed(1)+' MB';
+            if(total)progress.value=Math.min(99,received/total*100);
+            else progress.removeAttribute('value');
+          }
+          parts.push(decoder.decode());
+          html=parts.join('');
+        }else{
+          progress.removeAttribute('value');
+          html=await response.text();
+        }
+        if(!html.includes('</body>'))throw Error('Incomplete menu source');
+        clearTimeout(timeout);
+        status.textContent='جاري فتح المنيو...';
+        progress.value=100;
         html = html.replace(/<\/body>/i, '<script src="./menu-override.js?v=20261018-dedicated-matcha-shaking-photos"></' + 'script><script src="./food-override.js?v=20261019-food-menu-restored"></' + 'script><script src="./shisha-override.js?v=20261018-calma-special-names"></' + 'script><script src="./menu-extras.js?v=20261017-honey-tea-only"></' + 'script><script src="./desserts-visibility.js?v=20261019-hide-desserts"></' + 'script><script src="./ui-override.js?v=20261017-remove-language-toggle"></' + 'script></body>');
         document.open();
         document.write(html);
         document.close();
-      } catch (error) {
-        document.getElementById('loading').innerHTML =
-        '<strong>CALMA</strong><p>Could not load menu.</p><p><a href="./original-menu.html">Open original menu</a></p>';
-        console.error(error);
+      }catch(error){
+        clearTimeout(timeout);
+        console.error('CALMA menu load failed:',error);
+        status.textContent='تعذر تحميل المنيو تلقائياً. جرّب الرابط المباشر أدناه.';
+        progress.style.display='none';
+        alternative.style.display='block';
       }
     })();
   </script>
