@@ -1,9 +1,9 @@
 /* CALMA shisha — verified order and prices, October 2026 */
 (() => {
   const products=[
-    ['Signature','Calma Signature','كالما سجنتشر (فانيلا، كسترد، موز)','5.90'],
-    ['Special','Calma Special Sunset Bliss','كالما سبيشل سنسيت بليس','4.90'],
-    ['Special','Calma Special Velvet Berry','كالما سبيشل فيلفيت بيري','4.90'],
+    ['Signature','Calma Signature','كالما سجنتشر (فانيلا، كسترد، موز)','5.95'],
+    ['Special','Calma Special Sunset Bliss','كالما سبيشل سنسيت بليس','4.95'],
+    ['Special','Calma Special Velvet Berry','كالما سبيشل فيلفيت بيري','4.95'],
     ['Flavours','Double Apple Mazaya','تفاحتين مزايا','3.95'],
     ['Flavours','Licorice','سوس','3.95'],
     ['Flavours','Mastic','مستكة','3.95'],
