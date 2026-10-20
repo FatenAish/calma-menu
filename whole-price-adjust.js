@@ -11,6 +11,7 @@
   };
   let updated=0;
   for(const node of document.querySelectorAll('.product-card .price,.calma-food .cf-amount strong,.calma-shisha .cs-price')){
+    if(node.closest('[data-menu-name="Espresso"]'))continue; // Explicitly approved 1.00 / 1.75 prices
     const old=node.classList.contains('cs-price') ? (node.firstChild?.nodeValue||'').trim() : (node.textContent||'').trim();
     const next=adjust(old);
     if(next===null)continue;
