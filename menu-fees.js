@@ -17,7 +17,23 @@
       span.textContent=value;
       footer.append(span);
     }
-    section.append(footer);
+    if(section.id==='hotDrinks'){
+      const addons=document.getElementById('calmaDrinkAddons');
+      if(addons){
+        addons.insertAdjacentElement('afterend',footer);
+      }else{
+        section.append(footer);
+      }
+    }else{
+      section.append(footer);
+    }
+    // Avoid the original menu's layout styles stacking the two labels.
+    footer.style.setProperty('display','flex','important');
+    footer.style.setProperty('flex-direction','row','important');
+    footer.style.setProperty('justify-content','center','important');
+    footer.style.setProperty('align-items','center','important');
+    footer.style.setProperty('gap','28px','important');
+    footer.style.setProperty('width','100%','important');
   }
   console.info('CALMA: fees at the bottom of each category:',sections.length);
 })();
