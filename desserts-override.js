@@ -38,7 +38,9 @@
     img.className='product-image cd-img';
     img.loading='lazy';
     img.alt=en+' | '+ar;
-    img.src = candidates.map(x=>originalImages.get(norm(x))).find(Boolean) || 'assets/category-dessertsmenu.webp';
+    img.src = en === 'Matilda Cake'
+      ? 'https://thexocolatl.com/cdn/shop/files/JSH05240.jpg?v=1743242950&width=1000'
+      : (candidates.map(x=>originalImages.get(norm(x))).find(Boolean) || 'assets/category-dessertsmenu.webp');
     img.onerror = () => {img.onerror=null;img.src='assets/category-dessertsmenu.webp'};
     const name = document.createElement('div');
     name.className='cd-name';
