@@ -6,17 +6,18 @@
   document.head.append(style);
   const sections=[...document.querySelectorAll('section.catalog-section')];
   if(!sections.length)return;
-  const footer=document.createElement('div');
-  footer.className='calma-fees-footer';
-  footer.setAttribute('aria-label','Service 5% and Tax 8%');
-  for(const value of ['Service 5%','Tax 8%']){
-    const span=document.createElement('span');
-    span.textContent=value;
-    footer.append(span);
+  // One notice at the very bottom of each category section.
+  // In Beverages, menu-extras.js has already appended the add-ons here.
+  for(const section of sections){
+    const footer=document.createElement('div');
+    footer.className='calma-fees-footer';
+    footer.setAttribute('aria-label','Service 5% and Tax 8%');
+    for(const value of ['Service 5%','Tax 8%']){
+      const span=document.createElement('span');
+      span.textContent=value;
+      footer.append(span);
+    }
+    section.append(footer);
   }
-  // All category pages are sibling sections. One footer after the final section
-  // displays at the end of whichever category is selected.
-  const last=sections[sections.length-1];
-  last.insertAdjacentElement('afterend',footer);
-  console.info('CALMA: exactly one shared service/tax footer');
+  console.info('CALMA: fees at the bottom of each category:',sections.length);
 })();
