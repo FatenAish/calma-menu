@@ -15,20 +15,21 @@
     footer.append(service,tax);
     container.append(footer);
   };
-  // Add to menu content pages and each tab's visible product panel.
-  const ids=['shishaMenu','shishaSection','foodMenu','foodSection','dessertsMenu','dessertMenu','snacksMenu','snackMenu','hotDrinks'];
-  const targets=new Set(ids.map(id=>document.getElementById(id)).filter(Boolean));
-  for(const node of document.querySelectorAll('[id$="Products"]')) {
-    if(node.querySelector('article.product-card'))targets.add(node);
+  // Only leaf product grids OR a standalone section without product grids.
+  // Never attach to both a child grid and its parent section.
+  const grids=[...document.querySelectorAll('[id$="Products"]')]
+    .filter(node=>node.querySelector('article.product-card'));
+  for(const grid of grids)add(grid);
+  const standaloneIds=['shishaMenu','shishaSection','foodMenu','foodSection','dessertsMenu','dessertMenu','snacksMenu','snackMenu'];
+  const standalone=new Set(standaloneIds.map(id=>document.getElementById(id)).filter(Boolean));
+  for(const section of document.querySelectorAll('section')){
+    if(section.querySelector('article.product-card') &&
+       !section.querySelector('[id$="Products"]')) standalone.add(section);
   }
-  for(const node of document.querySelectorAll('section')) {
-    if(!node.querySelector('article.product-card'))continue;
-    if([...targets].some(target=>node!==target && node.contains(target)))continue;
-    targets.add(node);
+  for(const section of standalone){
+    if(grids.some(grid=>section.contains(grid)))continue;
+    if([...standalone].some(other=>other!==section && section.contains(other) && other.querySelector('article.product-card')))continue;
+    add(section);
   }
-  for(const target of targets) {
-    if(target.closest('.calma-fees-footer'))continue;
-    add(target);
-  }
-  console.info('CALMA: service/tax notices added:',targets.size);
+  console.info('CALMA: service/tax notices added:',grids.length + standalone.size);
 })();
