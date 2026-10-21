@@ -30,7 +30,8 @@
       const controller=new AbortController();
       const timeout=setTimeout(()=>controller.abort(),90000);
       try {
-        const response=await fetch('./original-menu.html',{cache:'default',signal:controller.signal});
+        let response=await fetch('./optimized-menu.html',{cache:'default',signal:controller.signal});
+        if(!response.ok) response=await fetch('./original-menu.html',{cache:'default',signal:controller.signal});
         if(!response.ok)throw Error('Menu source unavailable: HTTP '+response.status);
         const total=Number(response.headers.get('content-length'))||0;
         let received=0;
