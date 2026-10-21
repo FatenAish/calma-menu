@@ -28,3 +28,49 @@
   note.textContent = 'إضافة عسل +0.50 دينار';
   teaGrid.append(note);
 })();
+/* Drink add-ons: shown as the final product rows in Other Drinks. */
+(() => {
+  const grid = document.getElementById('othersProducts');
+  if (!grid) { console.warn('CALMA: Other Drinks grid unavailable'); return; }
+  const extras = [
+    ['Milk Add-on','إضافة حليب','0.50'],
+    ['Flavor Add-on','إضافة نكهة','0.50'],
+    ['Lactose-Free Milk Add-on','إضافة حليب لاكتوز فري','0.75']
+  ];
+  for (const [en,ar,amount] of extras) {
+    if ([...grid.querySelectorAll('article[data-menu-name]')].some(el => el.dataset.menuName===en)) continue;
+    const card=document.createElement('article');
+    card.className='product-card calma-drink-addon';
+    card.dataset.menuName=en;
+    const media=document.createElement('div');
+    media.className='product-image-wrap';
+    const image=document.createElement('img');
+    image.className='product-image';
+    image.src='assets/category-hotdrinks.webp';
+    image.alt=ar;
+    image.loading='lazy';
+    media.append(image);
+    const copy=document.createElement('div');
+    copy.className='product-copy';
+    const heading=document.createElement('h3');
+    heading.append(document.createTextNode(en));
+    const nameAr=document.createElement('bdi');
+    nameAr.className='product-name-ar';
+    nameAr.lang='ar';
+    nameAr.dir='rtl';
+    nameAr.textContent='('+ar+')';
+    heading.append(nameAr);
+    copy.append(heading);
+    const cost=document.createElement('div');
+    cost.className='product-price';
+    cost.dir='ltr';
+    const price=document.createElement('span');
+    price.className='price';
+    price.textContent=amount;
+    price.dataset.price=amount;
+    price.setAttribute('aria-label',amount+' JOD');
+    cost.append(price);
+    card.append(media,copy,cost);
+    grid.append(card);
+  }
+})();
