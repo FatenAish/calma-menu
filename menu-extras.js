@@ -28,17 +28,27 @@
   note.textContent = 'إضافة عسل +0.50 دينار';
   teaGrid.append(note);
 })();
-/* Drink add-ons: shown as the final product rows in Other Drinks. */
+/* Drink add-ons: one shared block at the end of the full Beverages section, outside all drink tabs. */
 (() => {
-  const grid = document.getElementById('othersProducts');
-  if (!grid) { console.warn('CALMA: Other Drinks grid unavailable'); return; }
+  const beverages = document.getElementById('hotDrinks');
+  if (!beverages) { console.warn('CALMA: Beverages section unavailable'); return; }
+  // Remove any previous tab-specific add-ons, avoiding duplicates.
+  for (const card of beverages.querySelectorAll('.calma-drink-addon')) card.remove();
+  const addonGrid=document.createElement('div');
+  addonGrid.id='calmaDrinkAddons';
+  addonGrid.className='product-grid calma-drink-addons';
+  addonGrid.style.marginTop='24px';
+  const heading=document.createElement('h3');
+  heading.textContent='Add-ons (الإضافات)';
+  heading.style.margin='28px 0 12px';
+  beverages.append(heading,addonGrid);
   const extras = [
     ['Milk Add-on','إضافة حليب','0.50'],
     ['Flavor Add-on','إضافة نكهة','0.50'],
     ['Lactose-Free Milk Add-on','إضافة حليب لاكتوز فري','0.75']
   ];
   for (const [en,ar,amount] of extras) {
-    if ([...grid.querySelectorAll('article[data-menu-name]')].some(el => el.dataset.menuName===en)) continue;
+    if ([...addonGrid.querySelectorAll('article[data-menu-name]')].some(el => el.dataset.menuName===en)) continue;
     const card=document.createElement('article');
     card.className='product-card calma-drink-addon';
     card.dataset.menuName=en;
@@ -71,6 +81,6 @@
     price.setAttribute('aria-label',amount+' JOD');
     cost.append(price);
     card.append(media,copy,cost);
-    grid.append(card);
+    addonGrid.append(card);
   }
 })();
