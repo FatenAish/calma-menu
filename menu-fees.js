@@ -1,35 +1,24 @@
-/* CALMA footer: display service and tax notice on every menu category page. */
+/* CALMA: exactly one horizontal Service / Tax footer at the end of each category page. */
 (() => {
   const style=document.createElement('style');
-  style.textContent='.calma-fees-footer{clear:both;margin:28px auto 18px;padding:12px 16px;border-top:1px solid #e7d7ca;text-align:center;direction:ltr;color:#735442;font:600 14px/1.8 Arial,sans-serif;letter-spacing:.02em}.calma-fees-footer span{display:block}';
+  style.textContent='.calma-fees-footer{display:flex!important;flex-direction:row!important;align-items:center;justify-content:center;gap:28px;flex-wrap:nowrap;clear:both;width:100%;box-sizing:border-box;margin:28px 0 16px;padding:16px 10px;border-top:1px solid #e7d7ca;text-align:center;direction:ltr;color:#735442;font:600 14px/1.5 Arial,sans-serif}.calma-fees-footer span{display:inline-block!important;white-space:nowrap}@media(max-width:360px){.calma-fees-footer{gap:16px;font-size:12px}}';
   document.head.append(style);
-  const add=container=>{
-    if(!container||container.querySelector(':scope > .calma-fees-footer'))return;
+  // Remove earlier footer placements (including the extra one outside the drinks panel).
+  document.querySelectorAll('.calma-fees-footer').forEach(node=>node.remove());
+  const add=section=>{
+    if(!section)return;
     const footer=document.createElement('div');
     footer.className='calma-fees-footer';
-    footer.setAttribute('aria-label','Service and tax information');
-    const service=document.createElement('span');
-    service.textContent='Service 5%';
-    const tax=document.createElement('span');
-    tax.textContent='Tax 8%';
-    footer.append(service,tax);
-    container.append(footer);
+    footer.setAttribute('aria-label','Service 5% and Tax 8%');
+    for(const label of ['Service 5%','Tax 8%']){
+      const item=document.createElement('span');
+      item.textContent=label;
+      footer.append(item);
+    }
+    section.append(footer);
   };
-  // Only leaf product grids OR a standalone section without product grids.
-  // Never attach to both a child grid and its parent section.
-  const grids=[...document.querySelectorAll('[id$="Products"]')]
-    .filter(node=>node.querySelector('article.product-card'));
-  for(const grid of grids)add(grid);
-  const standaloneIds=['shishaMenu','shishaSection','foodMenu','foodSection','dessertsMenu','dessertMenu','snacksMenu','snackMenu'];
-  const standalone=new Set(standaloneIds.map(id=>document.getElementById(id)).filter(Boolean));
-  for(const section of document.querySelectorAll('section')){
-    if(section.querySelector('article.product-card') &&
-       !section.querySelector('[id$="Products"]')) standalone.add(section);
-  }
-  for(const section of standalone){
-    if(grids.some(grid=>section.contains(grid)))continue;
-    if([...standalone].some(other=>other!==section && section.contains(other) && other.querySelector('article.product-card')))continue;
-    add(section);
-  }
-  console.info('CALMA: service/tax notices added:',grids.length + standalone.size);
+  // Main category pages, not individual beverages tabs or product grids.
+  const pages=[...document.querySelectorAll('section.catalog-section')];
+  for(const section of pages) add(section);
+  console.info('CALMA service/tax footer once per category page:',pages.length);
 })();
