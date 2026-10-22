@@ -25,7 +25,7 @@
         if (!response.ok) throw Error('Menu source unavailable');
         let html = await response.text();
         if (!html.includes('</body>')) throw Error('Menu source invalid');
-        html = html.replace(/<\/body>/i, '<script src="./menu-override.js?v=20261020-iced-shaken-labels"></' + 'script>' + '<script src="./food-override.js?v=20261019-food-menu-restored"></' + 'script>' + '<script src="./shisha-override.js?v=20261018-calma-special-names"></' + 'script>' + '<script src="./menu-extras.js?v=20261022-all-beverages-footer"></' + 'script>' + '<script src="./desserts-override.js?v=20261022-no-german-cake"></' + 'script>' + '<script src="./ui-override.js?v=20261017-remove-language-toggle"></' + 'script>' + '<script src="./whole-price-adjust.js?v=20261020-espresso-exception"></' + 'script>' + '<script src="./menu-fees.js?v=20261022-fees-after-addons-fix"></' + 'script>' + '</body>');
+        html = html.replace(/<\/body>/i, '<script src="./menu-override.js?v=20261022-hot-dark-mocha"></' + 'script>' + '<script src="./food-override.js?v=20261019-food-menu-restored"></' + 'script>' + '<script src="./shisha-override.js?v=20261018-calma-special-names"></' + 'script>' + '<script src="./menu-extras.js?v=20261022-all-beverages-footer"></' + 'script>' + '<script src="./desserts-override.js?v=20261022-no-german-cake"></' + 'script>' + '<script src="./ui-override.js?v=20261017-remove-language-toggle"></' + 'script>' + '<script src="./whole-price-adjust.js?v=20261020-espresso-exception"></' + 'script>' + '<script src="./menu-fees.js?v=20261022-fees-after-addons-fix"></' + 'script>' + '</body>');
         document.open();
         document.write(html);
         document.close();
