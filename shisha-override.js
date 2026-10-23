@@ -23,6 +23,7 @@
     ['Flavours','Mango','مانجا','3.95'],
     ['Flavours','Cherry','كرز','3.95'],
     ['Flavours','Mixed Fruits','فواكه مشكلة','3.95'],
+    ['Flavours','Tropical Fruits','الفواكه الاستوائية','3.95'],
     ['Flavours','Double Apple Al Fakher','تفاحتين فاخر','4.50'],
     ['Flavours','Double Apple Nakhla','تفاحتين نخلة','4.50'],
     ['Extras','Head Replacement','تغيير رأس','2.00']
