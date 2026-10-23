@@ -1,10 +1,11 @@
-/* CALMA desserts: four selected items, JOD prices, original menu photos where available. */
+/* CALMA desserts: five selected items, JOD prices, original menu photos where available. */
 (() => {
   const menu = [
     ['San Sebastian','سان سباستيان','3.95',['San Sebastian','San Sebastian Cheesecake','Basque Cheesecake','Cheesecake']],
     ['Matilda Cake','كيكة ماتيلدا','3.50',['Matilda Cake','Chocolate Cake','Matilda','Chocolate Fudge Cake']],
     ['Tiramisu Cake','تيراميسو','3.50',['Tiramisu Cake','Tiramisu']],
-    ['Red Velvet','ريد فيلفيت','3.50',['Red Velvet','Red Velvet Cake']]
+    ['Red Velvet','ريد فيلفيت','3.50',['Red Velvet','Red Velvet Cake']],
+    ['German Cake','جيرمن كيك','3.50',['German Cake','German Chocolate Cake','German']]
   ];
   const norm = t => (t||'').toLowerCase().replace(/\s+/g,' ').trim();
   const existing = [...document.querySelectorAll('article.product-card[data-menu-name]')];
