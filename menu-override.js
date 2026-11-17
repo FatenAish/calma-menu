@@ -7,14 +7,14 @@
   // Prices in Jordanian dinars. Categories with no approved new pricing retain
   // their existing prices; explicit items override their category defaults.
   const fixedPrices = new Map([
-    ["Hot Matcha","4.00"],
-    ["Hot Hazelnut Matcha","4.00"],
-    ["Hot Caramel Matcha","4.00"],
-    ["Hot Vanilla Matcha","4.00"],
-    ["Iced Matcha","4.25"],
-    ["Iced Hazelnut Matcha","4.25"],
-    ["Iced Caramel Matcha","4.25"],
-    ["Iced Vanilla Matcha","4.25"],
+    ["Hot Matcha","4.25"],
+    ["Hot Hazelnut Matcha","4.25"],
+    ["Hot Caramel Matcha","4.25"],
+    ["Hot Vanilla Matcha","4.25"],
+    ["Iced Matcha","4.50"],
+    ["Iced Hazelnut Matcha","4.50"],
+    ["Iced Caramel Matcha","4.50"],
+    ["Iced Vanilla Matcha","4.50"],
     ['Americano','2.00'],
     ['American Coffee','2.00'],
     ['Espresso','1.50'],
