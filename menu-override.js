@@ -29,7 +29,7 @@
     ['Hazelnut Latte','3.00'],
     ['Caramel Latte','3.00'],
     ['V60','3.95'],
-    ['Iced V60','3.75'],
+    ['Iced V60','4.25'],
     ['Iced Americano','2.25'],
     ['Iced Shaken','3.00'],
     ['Iced Spanish Latte','3.25'],
