@@ -24,6 +24,7 @@
     ['White Mocha','3.00'],
     ['French Press','3.00'],
     ['Cortado','2.50'],
+    ['Flat White','2.75'],
     ['Caramel Macchiato','2.75'],
     ['Vanilla Latte','3.00'],
     ['Hazelnut Latte','3.00'],
