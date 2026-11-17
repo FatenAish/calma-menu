@@ -73,7 +73,7 @@
     if (fixedPrices.has(name)) return fixedPrices.get(name);
     if (category === 'frappes') return '3.50';
     if (category === 'mojitos') return '3.00';
-    if (category === 'milkshakes') return '3.50';
+    if (category === 'milkshakes') return '4.00';
     if (category === 'juices') return '3.00';
     if (category === 'hot') return '2.50';
     if (category === 'cold') return '3.00';
