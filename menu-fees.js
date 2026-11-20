@@ -1,8 +1,8 @@
-/* CALMA: a single service/tax notice after the active menu category. */
+/* CALMA: a single service notice after the active menu category. */
 (() => {
   document.querySelectorAll('.calma-fees-footer').forEach(n => n.remove());
   const style=document.createElement('style');
-  style.textContent='.calma-fees-footer{display:flex!important;flex-direction:row!important;align-items:center;justify-content:center;gap:28px;flex-wrap:nowrap;clear:both;box-sizing:border-box;margin:25px auto 20px;padding:16px 10px;border-top:1px solid #e7d7ca;text-align:center;direction:ltr;color:#735442;font:600 14px/1.5 Arial,sans-serif}.calma-fees-footer span{display:inline-block;white-space:nowrap}@media(max-width:360px){.calma-fees-footer{gap:16px;font-size:12px}}';
+  style.textContent='.calma-fees-footer{display:flex!important;align-items:center;justify-content:center;clear:both;box-sizing:border-box;margin:22px auto 14px;padding:9px 8px 0;border-top:1px solid #e7d7ca;text-align:center;direction:ltr;color:#735442;font:400 11px/1.4 Arial,sans-serif}.calma-fees-footer span{white-space:nowrap}';
   document.head.append(style);
   const sections=[...document.querySelectorAll('section.catalog-section')];
   if(!sections.length)return;
@@ -11,8 +11,8 @@
   for(const section of sections){
     const footer=document.createElement('div');
     footer.className='calma-fees-footer';
-    footer.setAttribute('aria-label','Service 5% and Tax 8%');
-    for(const value of ['Service 5%','Tax 8%']){
+    footer.setAttribute('aria-label','Service 13%');
+    for(const value of ['Service 13%']){
       const span=document.createElement('span');
       span.textContent=value;
       footer.append(span);
