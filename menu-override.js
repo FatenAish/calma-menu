@@ -201,26 +201,15 @@
     }
     grid.replaceChildren(fragment);
   }
-  // Plain text note at the end of the Mojitos list.
+  // Insert a plain inline row after the final mojito flavor.
   const mojitoGrid = document.getElementById('mojitosProducts');
-  if (mojitoGrid && !mojitoGrid.querySelector('.mojito-energy-option')) {
-    const note = document.createElement('p');
-    note.className = 'mojito-energy-option';
-    note.style.cssText = 'grid-column:1/-1;width:100%;box-sizing:border-box;margin:12px 0 4px;padding:0;text-align:center;background:none;border:0;border-radius:0;box-shadow:none;color:inherit;font:inherit';
-    note.innerHTML = 'With Energy Drink — 3.50 JOD <span lang="ar" dir="rtl" style="display:block">مع مشروب طاقة — 3.50 دينار</span>';
-    mojitoGrid.append(note);
-  }
-  // Remove any stale energy banners and keep the note after the final flavor.
   if (mojitoGrid) {
-    for (const el of mojitoGrid.querySelectorAll('.mojito-energy-option')) {
-      if (el !== mojitoGrid.lastElementChild) el.remove();
-    }
-    const note = mojitoGrid.querySelector('.mojito-energy-option');
-    if (note) {
-      note.removeAttribute('style');
-      note.style.cssText = 'grid-column:1/-1;display:block;order:9999;width:100%;margin:12px 0 4px;padding:0;border:0!important;border-radius:0!important;box-shadow:none!important;background:transparent!important;text-align:center;font:inherit;color:inherit';
-      mojitoGrid.appendChild(note);
-    }
+    mojitoGrid.querySelectorAll('.mojito-energy-option').forEach(el => el.remove());
+    const note = document.createElement('div');
+    note.className = 'mojito-energy-option';
+    note.style.cssText = 'display:block;grid-column:1/-1;flex-basis:100%;order:99999;box-sizing:border-box;width:100%;margin:10px 0 0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;text-align:center;color:#4b382a;font:400 15px/1.7 Tajawal,Arial,sans-serif';
+    note.innerHTML = 'With Energy Drink — 3.50 JOD <span lang="ar" dir="rtl" style="display:block">مع مشروب طاقة — 3.50 دينار</span>';
+    mojitoGrid.appendChild(note);
   }
   const tabsContainer = document.getElementById('drinkTabs');
   for (const [id, english, arabic] of labels) {
