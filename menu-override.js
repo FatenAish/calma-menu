@@ -201,6 +201,15 @@
     }
     grid.replaceChildren(fragment);
   }
+  // Mojito energy drink option, displayed inside the Mojitos tab.
+  const mojitoGrid = document.getElementById('mojitosProducts');
+  if (mojitoGrid && !mojitoGrid.querySelector('.mojito-energy-option')) {
+    const option = document.createElement('article');
+    option.className = 'mojito-energy-option';
+    option.style.cssText = 'grid-column:1/-1;width:100%;box-sizing:border-box;padding:16px;margin:10px 0;border:1px solid #d7c3ae;border-radius:12px;background:#fffaf4;text-align:center;color:#4b382a;font:600 17px/1.7 Tajawal,Arial,sans-serif';
+    option.innerHTML = '<div>With Energy Drink <strong>3.50 JOD</strong></div><div lang="ar" dir="rtl">مع مشروب طاقة <strong>3.50 دينار</strong></div>';
+    mojitoGrid.prepend(option);
+  }
   const tabsContainer = document.getElementById('drinkTabs');
   for (const [id, english, arabic] of labels) {
     const tab = tabsContainer?.querySelector('[data-tab="' + id + '"]');
