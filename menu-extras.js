@@ -43,6 +43,7 @@
   heading.style.margin='28px 0 12px';
   beverages.append(heading,addonGrid);
   const extras = [
+    ['Extra Espresso Shot','إضافة شوت إسبريسو','0.50'],
     ['Milk Add-on','إضافة حليب','0.50'],
     ['Flavor Add-on','إضافة نكهة','0.50'],
     ['Lactose-Free Milk Add-on','إضافة حليب لاكتوز فري','0.75']
