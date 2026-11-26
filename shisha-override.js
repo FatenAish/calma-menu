@@ -27,7 +27,8 @@
     ['Flavours','Tropical Fruits','الفواكه الاستوائية','4.90'],
     ['Flavours','Double Apple Al Fakher','تفاحتين فاخر','5.50'],
     ['Flavours','Double Apple Nakhla','تفاحتين نخلة','5.50'],
-    ['Extras','Head Replacement','تغيير رأس','2.00']
+    ['Extras','Head Replacement','تغيير رأس','2.00'],
+    ['Extras','Hose Replacement','تجديد بربيش صحي','0.50']
   ];
   // Water is a drink; keep its new price even if the shisha section cannot be found.
   const waterCards=[...document.querySelectorAll('article.product-card[data-menu-name]')]
